@@ -13,6 +13,8 @@ public class DetailBarangResponse {
     private String message;
     @SerializedName("total_harga")
     private Integer totalHarga;
+    @SerializedName("gambar")
+    private String gambar;
     @SerializedName("detail_barang")
     private List<DetailBarang> detailBarang = null;
 
@@ -38,6 +40,14 @@ public class DetailBarangResponse {
 
     public void setTotalHarga(Integer totalHarga) {
         this.totalHarga = totalHarga;
+    }
+
+    public String getGambar() {
+        return gambar;
+    }
+
+    public void setGambar(String gambar) {
+        this.gambar = gambar;
     }
 
     public List<DetailBarang> getDetailBarang() {

@@ -44,7 +44,7 @@ public class DaftarTransaksiActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("Daftar Barang");
+            getSupportActionBar().setTitle("Daftar Transaksi");
         }
 
         init();

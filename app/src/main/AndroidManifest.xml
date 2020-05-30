@@ -12,15 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/MyTheme"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".activity.detailTransaksi.DetailTransaksiActivity"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.daftarTransaksi.DaftarTransaksiActivity"
             android:theme="@style/AppTheme" />
-
         <activity
             android:name=".activity.dashboard.DashboardActivity"
             android:theme="@style/MyTheme2" />
-
         <activity android:name=".activity.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
