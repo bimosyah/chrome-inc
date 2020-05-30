@@ -1,0 +1,43 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/proxima_nova</item>
+        <item name="android:statusBarColor">@color/blue</item>
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/blue</item>
+    </style>
+
+    <style name="MyTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/proxima_nova</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/cardview_shadow_start_color</item>
+    </style>
+
+    <style name="MyTheme2" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/proxima_nova</item>
+        <item name="android:statusBarColor">@color/blue</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/cardview_shadow_start_color</item>
+    </style>
+
+    <style name="ProgressBarStyle">
+        <item name="colorAccent">@color/blue</item>
+    </style>
+
+    <style name="MyTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="MyTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="MyTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>
