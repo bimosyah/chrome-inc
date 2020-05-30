@@ -1,4 +1,4 @@
-package bimo.syahputro.chromeinc.activity.barangMasuk;
+package bimo.syahputro.chromeinc.activity.daftarTransaksi;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -15,11 +15,11 @@ import java.util.List;
 import bimo.syahputro.chromeinc.R;
 import bimo.syahputro.chromeinc.network.entity.DaftarBarang;
 
-class BarangMasukAdapter extends RecyclerView.Adapter<BarangMasukAdapter.ViewHolder> {
+class DaftarTransaksiAdapter extends RecyclerView.Adapter<DaftarTransaksiAdapter.ViewHolder> {
     Context context;
     List<DaftarBarang> daftarBarangList;
 
-    public BarangMasukAdapter(Context context, List<DaftarBarang> daftarBarangList) {
+    public DaftarTransaksiAdapter(Context context, List<DaftarBarang> daftarBarangList) {
         this.context = context;
         this.daftarBarangList = daftarBarangList;
     }
@@ -27,7 +27,7 @@ class BarangMasukAdapter extends RecyclerView.Adapter<BarangMasukAdapter.ViewHol
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.list_barang_masuk, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.list_daftar_transaksi, parent, false);
         return new ViewHolder(view);
 
     }

@@ -1,4 +1,4 @@
-package bimo.syahputro.chromeinc.activity.barangMasuk;
+package bimo.syahputro.chromeinc.activity.daftarTransaksi;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,10 +29,10 @@ import retrofit2.Response;
 
 import static androidx.recyclerview.widget.DividerItemDecoration.HORIZONTAL;
 
-public class BarangMasukActivity extends AppCompatActivity {
+public class DaftarTransaksiActivity extends AppCompatActivity {
     FloatingActionButton fab;
     List<DaftarBarang> barangList = new ArrayList<>();
-    BarangMasukAdapter barangAdapter;
+    DaftarTransaksiAdapter barangAdapter;
     RecyclerView rvBarangMasuk;
     ProgressBar progressBar;
     private ApiService apiService;
@@ -40,7 +40,7 @@ public class BarangMasukActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_barang_masuk);
+        setContentView(R.layout.activity_daftar_transaksi);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -103,7 +103,7 @@ public class BarangMasukActivity extends AppCompatActivity {
 
     private void setupRecyclerView() {
         if (barangAdapter == null) {
-            barangAdapter = new BarangMasukAdapter(BarangMasukActivity.this, barangList);
+            barangAdapter = new DaftarTransaksiAdapter(DaftarTransaksiActivity.this, barangList);
             DividerItemDecoration itemDecor = new DividerItemDecoration(this, HORIZONTAL);
             rvBarangMasuk.addItemDecoration(itemDecor);
             rvBarangMasuk.setLayoutManager(new LinearLayoutManager(this));

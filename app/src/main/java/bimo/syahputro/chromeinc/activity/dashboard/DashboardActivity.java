@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import bimo.syahputro.chromeinc.R;
-import bimo.syahputro.chromeinc.activity.barangMasuk.BarangMasukActivity;
+import bimo.syahputro.chromeinc.activity.daftarTransaksi.DaftarTransaksiActivity;
 
 public class DashboardActivity extends AppCompatActivity {
     TextView tvUsername, tvRole;
@@ -33,7 +33,7 @@ public class DashboardActivity extends AppCompatActivity {
         cardBarang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DashboardActivity.this, BarangMasukActivity.class));
+                startActivity(new Intent(DashboardActivity.this, DaftarTransaksiActivity.class));
             }
         });
 

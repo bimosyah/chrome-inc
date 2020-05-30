@@ -3,6 +3,7 @@ package bimo.syahputro.chromeinc.network;
 
 import bimo.syahputro.chromeinc.network.response.BarangMasukResponse;
 import bimo.syahputro.chromeinc.network.response.BarangResponse;
+import bimo.syahputro.chromeinc.network.response.DetailBarangResponse;
 import bimo.syahputro.chromeinc.network.response.LoginResponse;
 import bimo.syahputro.chromeinc.network.response.TransaksiResponse;
 import retrofit2.Call;
@@ -10,6 +11,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface ApiService {
 
@@ -39,5 +41,10 @@ public interface ApiService {
             @Field("jumlah_barang") String[] jumlah_barang,
             @Field("estimasi") String estimasi
 
+    );
+
+    @GET("transaksi/getTransaksiById/{id_transaksi}")
+    Call<DetailBarangResponse> detailBarang(
+            @Query("id_transaksi") String id_transaksi
     );
 }

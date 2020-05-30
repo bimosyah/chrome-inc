@@ -14,7 +14,7 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".activity.barangMasuk.BarangMasukActivity"
+            android:name=".activity.daftarTransaksi.DaftarTransaksiActivity"
             android:theme="@style/AppTheme" />
 
         <activity

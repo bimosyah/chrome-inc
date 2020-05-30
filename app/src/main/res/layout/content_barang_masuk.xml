@@ -31,5 +31,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/progressbar"
-        tools:listitem="@layout/list_barang_masuk" />
+        tools:listitem="@layout/list_daftar_transaksi" />
 </androidx.constraintlayout.widget.ConstraintLayout>
