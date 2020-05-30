@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activity.daftarTransaksi.DaftarTransaksiActivity">
 
-    <include layout="@layout/content_barang_masuk" />
+    <include layout="@layout/content_daftar_transaksi" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

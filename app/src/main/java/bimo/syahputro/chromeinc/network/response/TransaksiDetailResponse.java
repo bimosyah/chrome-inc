@@ -5,8 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 import bimo.syahputro.chromeinc.network.entity.DetailBarang;
+import bimo.syahputro.chromeinc.network.entity.DetailCustomer;
 
-public class DetailBarangResponse {
+public class TransaksiDetailResponse {
     @SerializedName("status")
     private Integer status;
     @SerializedName("message")
@@ -15,6 +16,8 @@ public class DetailBarangResponse {
     private Integer totalHarga;
     @SerializedName("gambar")
     private String gambar;
+    @SerializedName("detail_customer")
+    private List<DetailCustomer> detailCustomer = null;
     @SerializedName("detail_barang")
     private List<DetailBarang> detailBarang = null;
 
@@ -48,6 +51,14 @@ public class DetailBarangResponse {
 
     public void setGambar(String gambar) {
         this.gambar = gambar;
+    }
+
+    public List<DetailCustomer> getDetailCustomer() {
+        return detailCustomer;
+    }
+
+    public void setDetailCustomer(List<DetailCustomer> detailCustomer) {
+        this.detailCustomer = detailCustomer;
     }
 
     public List<DetailBarang> getDetailBarang() {

@@ -1,11 +1,11 @@
 package bimo.syahputro.chromeinc.network;
 
 
-import bimo.syahputro.chromeinc.network.response.BarangMasukResponse;
-import bimo.syahputro.chromeinc.network.response.BarangResponse;
-import bimo.syahputro.chromeinc.network.response.DetailBarangResponse;
-import bimo.syahputro.chromeinc.network.response.LoginResponse;
 import bimo.syahputro.chromeinc.network.response.TransaksiResponse;
+import bimo.syahputro.chromeinc.network.response.BarangResponse;
+import bimo.syahputro.chromeinc.network.response.TransaksiDetailResponse;
+import bimo.syahputro.chromeinc.network.response.LoginResponse;
+import bimo.syahputro.chromeinc.network.response.TransaksiBaruResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -23,14 +23,14 @@ public interface ApiService {
     );
 
     @GET("Transaksi/getDaftarBarangMasuk")
-    Call<BarangMasukResponse> daftarBarangMasuk();
+    Call<TransaksiResponse> daftarBarangMasuk();
 
     @GET("barang/getBarangHarga")
     Call<BarangResponse> daftarBarang();
 
     @FormUrlEncoded
     @POST("transaksi/insertTransaksi")
-    Call<TransaksiResponse> newTransaksi(
+    Call<TransaksiBaruResponse> newTransaksi(
             @Field("nama_customer") String nama_customer,
             @Field("no_telp") String no_telp,
             @Field("alamat") String alamat,
@@ -44,7 +44,7 @@ public interface ApiService {
     );
 
     @GET("transaksi/getTransaksiById/{id_transaksi}")
-    Call<DetailBarangResponse> detailBarang(
+    Call<TransaksiDetailResponse> detailBarang(
             @Query("id_transaksi") String id_transaksi
     );
 }

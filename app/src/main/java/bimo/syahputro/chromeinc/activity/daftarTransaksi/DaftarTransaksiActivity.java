@@ -22,7 +22,7 @@ import bimo.syahputro.chromeinc.R;
 import bimo.syahputro.chromeinc.network.ApiClient;
 import bimo.syahputro.chromeinc.network.ApiService;
 import bimo.syahputro.chromeinc.network.entity.DaftarBarang;
-import bimo.syahputro.chromeinc.network.response.BarangMasukResponse;
+import bimo.syahputro.chromeinc.network.response.TransaksiResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -68,9 +68,9 @@ public class DaftarTransaksiActivity extends AppCompatActivity {
 
     private void loadBarang() {
         progressBar.setVisibility(View.VISIBLE);
-        apiService.daftarBarangMasuk().enqueue(new Callback<BarangMasukResponse>() {
+        apiService.daftarBarangMasuk().enqueue(new Callback<TransaksiResponse>() {
             @Override
-            public void onResponse(Call<BarangMasukResponse> call, final Response<BarangMasukResponse> response) {
+            public void onResponse(Call<TransaksiResponse> call, final Response<TransaksiResponse> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         if (response.body().getStatus() == 1) {
@@ -88,7 +88,7 @@ public class DaftarTransaksiActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<BarangMasukResponse> call, final Throwable t) {
+            public void onFailure(Call<TransaksiResponse> call, final Throwable t) {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
