@@ -1,17 +1,17 @@
 package bimo.syahputro.chromeinc.network;
 
 
-import bimo.syahputro.chromeinc.network.response.TransaksiResponse;
 import bimo.syahputro.chromeinc.network.response.BarangResponse;
-import bimo.syahputro.chromeinc.network.response.TransaksiDetailResponse;
 import bimo.syahputro.chromeinc.network.response.LoginResponse;
 import bimo.syahputro.chromeinc.network.response.TransaksiBaruResponse;
+import bimo.syahputro.chromeinc.network.response.TransaksiDetailResponse;
+import bimo.syahputro.chromeinc.network.response.TransaksiResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
+import retrofit2.http.Path;
 
 public interface ApiService {
 
@@ -45,6 +45,6 @@ public interface ApiService {
 
     @GET("transaksi/getTransaksiById/{id_transaksi}")
     Call<TransaksiDetailResponse> detailBarang(
-            @Query("id_transaksi") String id_transaksi
+            @Path("id_transaksi") String id_transaksi
     );
 }
