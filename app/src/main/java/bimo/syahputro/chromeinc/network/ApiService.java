@@ -6,6 +6,7 @@ import bimo.syahputro.chromeinc.network.response.LoginResponse;
 import bimo.syahputro.chromeinc.network.response.TransaksiBaruResponse;
 import bimo.syahputro.chromeinc.network.response.TransaksiDetailResponse;
 import bimo.syahputro.chromeinc.network.response.TransaksiResponse;
+import bimo.syahputro.chromeinc.network.response.TransaksiUpdateStatusResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -46,5 +47,12 @@ public interface ApiService {
     @GET("transaksi/getTransaksiById/{id_transaksi}")
     Call<TransaksiDetailResponse> detailBarang(
             @Path("id_transaksi") String id_transaksi
+    );
+
+    @FormUrlEncoded
+    @POST("transaksi/updateStatusTransaksi")
+    Call<TransaksiUpdateStatusResponse> updateStatus(
+            @Field("id_transaksi") String id_transaksi,
+            @Field("id_status") String id_status
     );
 }

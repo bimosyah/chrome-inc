@@ -17,16 +17,17 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.daftarTransaksi.DaftarTransaksiActivity"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".activity.dashboard.DashboardActivity"
-            android:theme="@style/MyTheme2" />
-        <activity android:name=".activity.login.LoginActivity">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.dashboard.DashboardActivity"
+            android:theme="@style/MyTheme2" />
+        <activity android:name=".activity.login.LoginActivity">
         </activity>
     </application>
 

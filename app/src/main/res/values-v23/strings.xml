@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="login_kosong">Username dan Password Wajib Diisi</string>
+
+    <string-array name="spinner_status">
+        <item>Menunggu</item>
+        <item>Dikerjakan</item>
+        <item>Selesai</item>
+    </string-array>
 </resources>

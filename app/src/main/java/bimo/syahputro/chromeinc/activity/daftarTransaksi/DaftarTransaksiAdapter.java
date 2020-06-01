@@ -3,6 +3,7 @@ package bimo.syahputro.chromeinc.activity.daftarTransaksi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import bimo.syahputro.chromeinc.R;
 import bimo.syahputro.chromeinc.activity.detailTransaksi.DetailTransaksiActivity;
 import bimo.syahputro.chromeinc.network.entity.DaftarBarang;
 
+import static bimo.syahputro.chromeinc.activity.detailTransaksi.DetailTransaksiActivity.ID_STATUS;
 import static bimo.syahputro.chromeinc.activity.detailTransaksi.DetailTransaksiActivity.ID_TRANSAKSI;
 
 class DaftarTransaksiAdapter extends RecyclerView.Adapter<DaftarTransaksiAdapter.ViewHolder> {
@@ -40,6 +42,7 @@ class DaftarTransaksiAdapter extends RecyclerView.Adapter<DaftarTransaksiAdapter
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         int nomer = position + 1;
+        String id_status = "0";
         holder.tvNomer.setText(nomer + ".");
         holder.tvNamaCustomer.setText(daftarBarangList.get(position).getNamaCustomer());
         holder.tvStatus.setText(daftarBarangList.get(position).getStatus());
@@ -48,20 +51,33 @@ class DaftarTransaksiAdapter extends RecyclerView.Adapter<DaftarTransaksiAdapter
         context.getResources().getString(R.string.status_menunggu);
         String color;
 
-        if (daftarBarangList.get(position).getStatus().equals("Menunggu"))
+        if (daftarBarangList.get(position).getStatus().equals("Menunggu")){
             color = context.getResources().getString(R.string.status_menunggu);
-        else if (daftarBarangList.get(position).getStatus().equals("Selesai"))
-            color = context.getResources().getString(R.string.status_menunggu);
-        else
+            id_status = "0";
+        }
+        else if (daftarBarangList.get(position).getStatus().equals("Selesai")){
+            color = context.getResources().getString(R.string.status_selesai);
+            id_status = "2";
+        } else{
             color = context.getResources().getString(R.string.status_dikerjakan);
+            id_status = "1";
+        }
 
         holder.tvStatus.setBackgroundColor(Color.parseColor(color));
+
+        final String final_id_status = id_status;
 
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailTransaksiActivity.class);
-                intent.putExtra(ID_TRANSAKSI, daftarBarangList.get(position).getIdTransaksi());
+//                intent.putExtra(ID_TRANSAKSI, daftarBarangList.get(position).getIdTransaksi());
+//                intent.putExtra(ID_STATUS, final_id_status);
+
+                Bundle bundle = new Bundle();
+                bundle.putString(ID_TRANSAKSI, daftarBarangList.get(position).getIdTransaksi());
+                bundle.putString(ID_STATUS, final_id_status);
+                intent.putExtras(bundle);
                 context.startActivity(intent);
             }
         });

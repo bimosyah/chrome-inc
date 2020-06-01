@@ -1,11 +1,12 @@
 package bimo.syahputro.chromeinc.activity.detailTransaksi;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +27,7 @@ import bimo.syahputro.chromeinc.network.ApiService;
 import bimo.syahputro.chromeinc.network.entity.DetailBarang;
 import bimo.syahputro.chromeinc.network.entity.DetailCustomer;
 import bimo.syahputro.chromeinc.network.response.TransaksiDetailResponse;
+import bimo.syahputro.chromeinc.network.response.TransaksiUpdateStatusResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,7 +35,9 @@ import retrofit2.Response;
 import static androidx.recyclerview.widget.DividerItemDecoration.HORIZONTAL;
 
 public class DetailTransaksiActivity extends AppCompatActivity {
-    public static String ID_TRANSAKSI;
+    public static String ID_TRANSAKSI = "ID_TRANSAKSI";
+    public static String ID_STATUS = "ID_STATUS";
+
     ConstraintLayout constraintLayout;
     TextView tvNamaCustomer, tvAlamatCustomer, tvNomerCustomer, tvTotalTransaksi;
     List<DetailCustomer> detailCustomerList = new ArrayList<>();
@@ -41,6 +45,8 @@ public class DetailTransaksiActivity extends AppCompatActivity {
     DetailTransaksiAdapter adapter;
     RecyclerView rvDetailTransaksi;
     ImageView ivGambarBarang;
+    Spinner spinnerStatus;
+    String id_status_transaksi = null;
     private ApiService apiService;
 
     @Override
@@ -53,10 +59,23 @@ public class DetailTransaksiActivity extends AppCompatActivity {
         }
         init();
 
-        Intent i = getIntent();
-        String id_transaksi = i.getStringExtra(ID_TRANSAKSI);
+        Bundle bundle = getIntent().getExtras();
+        final String id_transaksi = bundle.getString(ID_TRANSAKSI);
+        id_status_transaksi = bundle.getString(ID_STATUS);
 
         detailTransaksi(id_transaksi);
+        spinnerStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (Integer.parseInt(id_status_transaksi) != i)
+                    updateStatus(id_transaksi, String.valueOf(i));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
     }
 
@@ -79,7 +98,8 @@ public class DetailTransaksiActivity extends AppCompatActivity {
                             Glide.with(getApplicationContext())
                                     .load(response.body().getGambar())
                                     .into(ivGambarBarang);
-                            tvTotalTransaksi.setText("Rp. " +response.body().getTotalHarga().toString());
+                            tvTotalTransaksi.setText("Rp. " + response.body().getTotalHarga().toString());
+                            spinnerStatus.setSelection(Integer.parseInt(id_status_transaksi));
                             constraintLayout.setVisibility(View.VISIBLE);
                         }
                     }
@@ -94,7 +114,33 @@ public class DetailTransaksiActivity extends AppCompatActivity {
         });
     }
 
+    private void updateStatus(String id_transaksi, String id_status) {
+        apiService.updateStatus(id_transaksi, id_status).enqueue(new Callback<TransaksiUpdateStatusResponse>() {
+            @Override
+            public void onResponse(Call<TransaksiUpdateStatusResponse> call, Response<TransaksiUpdateStatusResponse> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        if (response.body().getStatus() == 1) {
+                            Snackbar.make(constraintLayout, "Update status berhasil", Snackbar.LENGTH_SHORT)
+                                    .show();
+                        }else {
+                            Snackbar.make(constraintLayout, "Update status gagal", Snackbar.LENGTH_SHORT)
+                                    .show();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TransaksiUpdateStatusResponse> call, Throwable t) {
+                Snackbar.make(constraintLayout, t.getMessage(), Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        });
+    }
+
     private void init() {
+        spinnerStatus = findViewById(R.id.spinner_status);
         rvDetailTransaksi = findViewById(R.id.rv_detail_transaksi);
         apiService = ApiClient.getClient().create(ApiService.class);
         constraintLayout = findViewById(R.id.constrain_layout);

@@ -16,4 +16,10 @@
     <string name="status_dikerjakan">#FFF6AA</string>
     <string name="status_selesai">#0ACF83</string>
 
+    <string-array name="spinner_status">
+        <item>Menunggu</item>
+        <item>Dikerjakan</item>
+        <item>Selesai</item>
+    </string-array>
+
 </resources>
