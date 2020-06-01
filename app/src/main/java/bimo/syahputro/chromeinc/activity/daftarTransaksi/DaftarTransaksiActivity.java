@@ -118,13 +118,17 @@ public class DaftarTransaksiActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
+        }else{
+            barangAdapter = null;
+            loadBarang();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
 }
