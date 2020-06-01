@@ -118,7 +118,7 @@ public class DaftarTransaksiActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        }else{
+        }else if (item.getItemId() == R.id.menu_refresh){
             barangAdapter = null;
             loadBarang();
         }
