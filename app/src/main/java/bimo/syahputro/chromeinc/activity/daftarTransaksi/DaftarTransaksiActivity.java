@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,7 +33,7 @@ import static androidx.recyclerview.widget.DividerItemDecoration.HORIZONTAL;
 public class DaftarTransaksiActivity extends AppCompatActivity {
     FloatingActionButton fab;
     List<DaftarTransaksi> barangList = new ArrayList<>();
-    DaftarTransaksiAdapter barangAdapter;
+    DaftarTransaksiAdapter transaksiAdapter;
     RecyclerView rvBarangMasuk;
     ProgressBar progressBar;
     private ApiService apiService;
@@ -102,14 +103,14 @@ public class DaftarTransaksiActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView() {
-        if (barangAdapter == null) {
-            barangAdapter = new DaftarTransaksiAdapter(DaftarTransaksiActivity.this, barangList);
+        if (transaksiAdapter == null) {
+            transaksiAdapter = new DaftarTransaksiAdapter(DaftarTransaksiActivity.this, barangList);
             DividerItemDecoration itemDecor = new DividerItemDecoration(this, HORIZONTAL);
             rvBarangMasuk.addItemDecoration(itemDecor);
             rvBarangMasuk.setLayoutManager(new LinearLayoutManager(this));
-            rvBarangMasuk.setAdapter(barangAdapter);
+            rvBarangMasuk.setAdapter(transaksiAdapter);
         } else {
-            barangAdapter.notifyDataSetChanged();
+            transaksiAdapter.notifyDataSetChanged();
         }
     }
 
@@ -119,7 +120,7 @@ public class DaftarTransaksiActivity extends AppCompatActivity {
             finish();
             return true;
         }else if (item.getItemId() == R.id.menu_refresh){
-            barangAdapter = null;
+            transaksiAdapter = null;
             loadBarang();
         }
 
@@ -128,7 +129,24 @@ public class DaftarTransaksiActivity extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
-        return super.onCreateOptionsMenu(menu);
+
+        MenuItem searchItem = menu.findItem(R.id.menu_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                transaksiAdapter.getFilter().filter(s);
+                return false;
+            }
+        });
+
+        return true;
     }
 
 }
