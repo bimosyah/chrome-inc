@@ -12,15 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import bimo.syahputro.chromeinc.R;
-import bimo.syahputro.chromeinc.network.entity.DetailBarang;
+import bimo.syahputro.chromeinc.network.entity.DetailTransaksi;
 
 public class DetailTransaksiAdapter extends RecyclerView.Adapter<DetailTransaksiAdapter.ViewHolder> {
     Context context;
-    List<DetailBarang> detailBarangList;
+    List<DetailTransaksi> detailTransaksiList;
 
-    public DetailTransaksiAdapter(Context context, List<DetailBarang> detailBarangList) {
+    public DetailTransaksiAdapter(Context context, List<DetailTransaksi> detailTransaksiList) {
         this.context = context;
-        this.detailBarangList = detailBarangList;
+        this.detailTransaksiList = detailTransaksiList;
     }
 
     @NonNull
@@ -32,14 +32,14 @@ public class DetailTransaksiAdapter extends RecyclerView.Adapter<DetailTransaksi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tvNamaBarang.setText(detailBarangList.get(position).getNamaBarang());
-        holder.tvJumlahBarang.setText("Qty " + detailBarangList.get(position).getJumlahBarang());
-        holder.tvTotalHarga.setText("Rp. "+detailBarangList.get(position).getHargaTotal());
+        holder.tvNamaBarang.setText(detailTransaksiList.get(position).getNamaBarang());
+        holder.tvJumlahBarang.setText("Qty " + detailTransaksiList.get(position).getJumlahBarang());
+        holder.tvTotalHarga.setText("Rp. "+ detailTransaksiList.get(position).getHargaTotal());
     }
 
     @Override
     public int getItemCount() {
-        return detailBarangList.size();
+        return detailTransaksiList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

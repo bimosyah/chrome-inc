@@ -24,7 +24,7 @@ import java.util.List;
 import bimo.syahputro.chromeinc.R;
 import bimo.syahputro.chromeinc.network.ApiClient;
 import bimo.syahputro.chromeinc.network.ApiService;
-import bimo.syahputro.chromeinc.network.entity.DetailBarang;
+import bimo.syahputro.chromeinc.network.entity.DetailTransaksi;
 import bimo.syahputro.chromeinc.network.entity.DetailCustomer;
 import bimo.syahputro.chromeinc.network.response.TransaksiDetailResponse;
 import bimo.syahputro.chromeinc.network.response.TransaksiUpdateStatusResponse;
@@ -41,7 +41,7 @@ public class DetailTransaksiActivity extends AppCompatActivity {
     ConstraintLayout constraintLayout;
     TextView tvNamaCustomer, tvAlamatCustomer, tvNomerCustomer, tvTotalTransaksi;
     List<DetailCustomer> detailCustomerList = new ArrayList<>();
-    List<DetailBarang> detailBarangList = new ArrayList<>();
+    List<DetailTransaksi> detailTransaksiList = new ArrayList<>();
     DetailTransaksiAdapter adapter;
     RecyclerView rvDetailTransaksi;
     ImageView ivGambarBarang;
@@ -88,7 +88,7 @@ public class DetailTransaksiActivity extends AppCompatActivity {
                     if (response.body() != null) {
                         if (response.body().getStatus() == 1) {
                             detailCustomerList = response.body().getDetailCustomer();
-                            detailBarangList = response.body().getDetailBarang();
+                            detailTransaksiList = response.body().getDetailTransaksi();
                             for (DetailCustomer customer : detailCustomerList) {
                                 tvNamaCustomer.setText(customer.getNamaCustomer());
                                 tvAlamatCustomer.setText(customer.getAlamat());
@@ -153,7 +153,7 @@ public class DetailTransaksiActivity extends AppCompatActivity {
 
     private void setupRecyclerView() {
         if (adapter == null) {
-            adapter = new DetailTransaksiAdapter(DetailTransaksiActivity.this, detailBarangList);
+            adapter = new DetailTransaksiAdapter(DetailTransaksiActivity.this, detailTransaksiList);
             DividerItemDecoration itemDecor = new DividerItemDecoration(this, HORIZONTAL);
             rvDetailTransaksi.addItemDecoration(itemDecor);
             rvDetailTransaksi.setLayoutManager(new LinearLayoutManager(this));

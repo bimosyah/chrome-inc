@@ -21,7 +21,7 @@ import java.util.List;
 import bimo.syahputro.chromeinc.R;
 import bimo.syahputro.chromeinc.network.ApiClient;
 import bimo.syahputro.chromeinc.network.ApiService;
-import bimo.syahputro.chromeinc.network.entity.DaftarBarang;
+import bimo.syahputro.chromeinc.network.entity.DaftarTransaksi;
 import bimo.syahputro.chromeinc.network.response.TransaksiResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,7 +31,7 @@ import static androidx.recyclerview.widget.DividerItemDecoration.HORIZONTAL;
 
 public class DaftarTransaksiActivity extends AppCompatActivity {
     FloatingActionButton fab;
-    List<DaftarBarang> barangList = new ArrayList<>();
+    List<DaftarTransaksi> barangList = new ArrayList<>();
     DaftarTransaksiAdapter barangAdapter;
     RecyclerView rvBarangMasuk;
     ProgressBar progressBar;
@@ -68,7 +68,7 @@ public class DaftarTransaksiActivity extends AppCompatActivity {
 
     private void loadBarang() {
         progressBar.setVisibility(View.VISIBLE);
-        apiService.daftarBarangMasuk().enqueue(new Callback<TransaksiResponse>() {
+        apiService.daftarTransaksi().enqueue(new Callback<TransaksiResponse>() {
             @Override
             public void onResponse(Call<TransaksiResponse> call, final Response<TransaksiResponse> response) {
                 if (response.isSuccessful()) {
@@ -78,7 +78,7 @@ public class DaftarTransaksiActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     progressBar.setVisibility(View.GONE);
-                                    barangList = response.body().getDaftarBarang();
+                                    barangList = response.body().getDaftarTransaksi();
                                     setupRecyclerView();
                                 }
                             }, 3000);

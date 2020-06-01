@@ -24,7 +24,7 @@ public interface ApiService {
     );
 
     @GET("Transaksi/getDaftarBarangMasuk")
-    Call<TransaksiResponse> daftarBarangMasuk();
+    Call<TransaksiResponse> daftarTransaksi();
 
     @GET("barang/getBarangHarga")
     Call<BarangResponse> daftarBarang();
@@ -54,5 +54,10 @@ public interface ApiService {
     Call<TransaksiUpdateStatusResponse> updateStatus(
             @Field("id_transaksi") String id_transaksi,
             @Field("id_status") String id_status
+    );
+
+    @GET("Transaksi/getTransaksiByCustomerName/{nama_customer}")
+    Call<TransaksiResponse> searchTransaksi(
+            @Path("nama_customer") String nama_customer
     );
 }

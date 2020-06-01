@@ -7,28 +7,64 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import bimo.syahputro.chromeinc.R;
 import bimo.syahputro.chromeinc.activity.detailTransaksi.DetailTransaksiActivity;
-import bimo.syahputro.chromeinc.network.entity.DaftarBarang;
+import bimo.syahputro.chromeinc.network.entity.DaftarTransaksi;
 
 import static bimo.syahputro.chromeinc.activity.detailTransaksi.DetailTransaksiActivity.ID_STATUS;
 import static bimo.syahputro.chromeinc.activity.detailTransaksi.DetailTransaksiActivity.ID_TRANSAKSI;
 
-class DaftarTransaksiAdapter extends RecyclerView.Adapter<DaftarTransaksiAdapter.ViewHolder> {
+class DaftarTransaksiAdapter extends RecyclerView.Adapter<DaftarTransaksiAdapter.ViewHolder> implements Filterable {
     Context context;
-    List<DaftarBarang> daftarBarangList;
+    List<DaftarTransaksi> daftarTransaksiList;
+    List<DaftarTransaksi> daftarTransaksiListFull;
 
-    public DaftarTransaksiAdapter(Context context, List<DaftarBarang> daftarBarangList) {
+    private Filter daftarTransaksiFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<DaftarTransaksi> filteredList = new ArrayList<>();
+
+            if (charSequence == null || charSequence.length() == 0) {
+                filteredList.addAll(daftarTransaksiListFull);
+            } else {
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+
+                for (DaftarTransaksi transaksi : daftarTransaksiListFull) {
+                    if (transaksi.getNamaCustomer().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(transaksi);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            daftarTransaksiList.clear();
+            daftarTransaksiList.addAll((List) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
+
+    public DaftarTransaksiAdapter(Context context, List<DaftarTransaksi> daftarTransaksiList) {
         this.context = context;
-        this.daftarBarangList = daftarBarangList;
+        this.daftarTransaksiList = daftarTransaksiList;
+        this.daftarTransaksiListFull = new ArrayList<>(daftarTransaksiList);
     }
 
     @NonNull
@@ -44,21 +80,20 @@ class DaftarTransaksiAdapter extends RecyclerView.Adapter<DaftarTransaksiAdapter
         int nomer = position + 1;
         String id_status = "0";
         holder.tvNomer.setText(nomer + ".");
-        holder.tvNamaCustomer.setText(daftarBarangList.get(position).getNamaCustomer());
-        holder.tvStatus.setText(daftarBarangList.get(position).getStatus());
+        holder.tvNamaCustomer.setText(daftarTransaksiList.get(position).getNamaCustomer());
+        holder.tvStatus.setText(daftarTransaksiList.get(position).getStatus());
 //        holder.tvDetail.setText("Detail");
 
         context.getResources().getString(R.string.status_menunggu);
         String color;
 
-        if (daftarBarangList.get(position).getStatus().equals("Menunggu")){
+        if (daftarTransaksiList.get(position).getStatus().equals("Menunggu")) {
             color = context.getResources().getString(R.string.status_menunggu);
             id_status = "0";
-        }
-        else if (daftarBarangList.get(position).getStatus().equals("Selesai")){
+        } else if (daftarTransaksiList.get(position).getStatus().equals("Selesai")) {
             color = context.getResources().getString(R.string.status_selesai);
             id_status = "2";
-        } else{
+        } else {
             color = context.getResources().getString(R.string.status_dikerjakan);
             id_status = "1";
         }
@@ -75,7 +110,7 @@ class DaftarTransaksiAdapter extends RecyclerView.Adapter<DaftarTransaksiAdapter
 //                intent.putExtra(ID_STATUS, final_id_status);
 
                 Bundle bundle = new Bundle();
-                bundle.putString(ID_TRANSAKSI, daftarBarangList.get(position).getIdTransaksi());
+                bundle.putString(ID_TRANSAKSI, daftarTransaksiList.get(position).getIdTransaksi());
                 bundle.putString(ID_STATUS, final_id_status);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
@@ -86,7 +121,12 @@ class DaftarTransaksiAdapter extends RecyclerView.Adapter<DaftarTransaksiAdapter
 
     @Override
     public int getItemCount() {
-        return daftarBarangList.size();
+        return daftarTransaksiList.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return daftarTransaksiFilter;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -95,6 +135,7 @@ class DaftarTransaksiAdapter extends RecyclerView.Adapter<DaftarTransaksiAdapter
         TextView tvStatus;
         TextView tvDetail;
         ConstraintLayout container;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             container = itemView.findViewById(R.id.constrain_layout);
@@ -105,4 +146,5 @@ class DaftarTransaksiAdapter extends RecyclerView.Adapter<DaftarTransaksiAdapter
 
         }
     }
+
 }

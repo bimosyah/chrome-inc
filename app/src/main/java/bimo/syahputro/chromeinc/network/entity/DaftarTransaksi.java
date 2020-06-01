@@ -2,7 +2,7 @@ package bimo.syahputro.chromeinc.network.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-public class DaftarBarang {
+public class DaftarTransaksi {
     @SerializedName("id_transaksi")
     private String idTransaksi;
     @SerializedName("nama_customer")

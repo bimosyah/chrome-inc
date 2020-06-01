@@ -3,7 +3,7 @@ package bimo.syahputro.chromeinc.network.response;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
-import bimo.syahputro.chromeinc.network.entity.DaftarBarang;
+import bimo.syahputro.chromeinc.network.entity.DaftarTransaksi;
 
 public class TransaksiResponse {
     @SerializedName("status")
@@ -11,7 +11,7 @@ public class TransaksiResponse {
     @SerializedName("message")
     private String message;
     @SerializedName("daftar_barang")
-    private List<DaftarBarang> daftarBarang = null;
+    private List<DaftarTransaksi> daftarTransaksi = null;
 
     public Integer getStatus() {
         return status;
@@ -29,11 +29,11 @@ public class TransaksiResponse {
         this.message = message;
     }
 
-    public List<DaftarBarang> getDaftarBarang() {
-        return daftarBarang;
+    public List<DaftarTransaksi> getDaftarTransaksi() {
+        return daftarTransaksi;
     }
 
-    public void setDaftarBarang(List<DaftarBarang> daftarBarang) {
-        this.daftarBarang = daftarBarang;
+    public void setDaftarTransaksi(List<DaftarTransaksi> daftarTransaksi) {
+        this.daftarTransaksi = daftarTransaksi;
     }
 }
