@@ -5,6 +5,11 @@
 
     <include layout="@layout/content_transaksi_header"/>
 
+    <include layout="@layout/content_transaksi"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="50dp"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -17,6 +22,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/btn_back"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
