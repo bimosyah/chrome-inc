@@ -2,9 +2,9 @@ package bimo.syahputro.chromeinc.network.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-public class DetailCustomer {
-    @SerializedName("id_transaksi")
-    private String idTransaksi;
+public class Customer {
+    @SerializedName("id_customer")
+    private String idCustomer;
     @SerializedName("nama_customer")
     private String namaCustomer;
     @SerializedName("no_telp")
@@ -12,12 +12,12 @@ public class DetailCustomer {
     @SerializedName("alamat")
     private String alamat;
 
-    public String getIdTransaksi() {
-        return idTransaksi;
+    public String getIdCustomer() {
+        return idCustomer;
     }
 
-    public void setIdTransaksi(String idTransaksi) {
-        this.idTransaksi = idTransaksi;
+    public void setIdCustomer(String idCustomer) {
+        this.idCustomer = idCustomer;
     }
 
     public String getNamaCustomer() {

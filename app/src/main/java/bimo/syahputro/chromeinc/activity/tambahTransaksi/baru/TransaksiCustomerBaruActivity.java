@@ -1,4 +1,4 @@
-package bimo.syahputro.chromeinc.activity.tambahTransaksi;
+package bimo.syahputro.chromeinc.activity.tambahTransaksi.baru;
 
 import androidx.appcompat.app.AppCompatActivity;
 

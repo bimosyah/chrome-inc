@@ -25,7 +25,7 @@ import bimo.syahputro.chromeinc.R;
 import bimo.syahputro.chromeinc.network.ApiClient;
 import bimo.syahputro.chromeinc.network.ApiService;
 import bimo.syahputro.chromeinc.network.entity.DetailTransaksi;
-import bimo.syahputro.chromeinc.network.entity.DetailCustomer;
+import bimo.syahputro.chromeinc.network.entity.DetailTransaksiCustomer;
 import bimo.syahputro.chromeinc.network.response.TransaksiDetailResponse;
 import bimo.syahputro.chromeinc.network.response.TransaksiUpdateStatusResponse;
 import retrofit2.Call;
@@ -40,7 +40,7 @@ public class DetailTransaksiActivity extends AppCompatActivity {
 
     ConstraintLayout constraintLayout;
     TextView tvNamaCustomer, tvAlamatCustomer, tvNomerCustomer, tvTotalTransaksi;
-    List<DetailCustomer> detailCustomerList = new ArrayList<>();
+    List<DetailTransaksiCustomer> detailTransaksiCustomerList = new ArrayList<>();
     List<DetailTransaksi> detailTransaksiList = new ArrayList<>();
     DetailTransaksiAdapter adapter;
     RecyclerView rvDetailTransaksi;
@@ -87,9 +87,9 @@ public class DetailTransaksiActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         if (response.body().getStatus() == 1) {
-                            detailCustomerList = response.body().getDetailCustomer();
+                            detailTransaksiCustomerList = response.body().getDetailTransaksiCustomer();
                             detailTransaksiList = response.body().getDetailTransaksi();
-                            for (DetailCustomer customer : detailCustomerList) {
+                            for (DetailTransaksiCustomer customer : detailTransaksiCustomerList) {
                                 tvNamaCustomer.setText(customer.getNamaCustomer());
                                 tvAlamatCustomer.setText(customer.getAlamat());
                                 tvNomerCustomer.setText(customer.getNoTelp());

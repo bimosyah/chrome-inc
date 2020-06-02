@@ -2,6 +2,7 @@ package bimo.syahputro.chromeinc.network;
 
 
 import bimo.syahputro.chromeinc.network.response.BarangResponse;
+import bimo.syahputro.chromeinc.network.response.CustomerResponse;
 import bimo.syahputro.chromeinc.network.response.LoginResponse;
 import bimo.syahputro.chromeinc.network.response.TransaksiBaruResponse;
 import bimo.syahputro.chromeinc.network.response.TransaksiDetailResponse;
@@ -60,4 +61,7 @@ public interface ApiService {
     Call<TransaksiResponse> searchTransaksi(
             @Path("nama_customer") String nama_customer
     );
+
+    @GET("customer/loadCustomer")
+    Call<CustomerResponse> daftarCustomer();
 }

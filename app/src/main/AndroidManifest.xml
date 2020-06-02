@@ -14,11 +14,11 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".activity.tambahTransaksi.DaftarCustomerActivity"
+            android:name=".activity.tambahTransaksi.lama.DaftarCustomerActivity"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".activity.tambahTransaksi.TransaksiCustomerBaruActivity"
+            android:name=".activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity"
             android:theme="@style/AppTheme" />
 
         <activity
