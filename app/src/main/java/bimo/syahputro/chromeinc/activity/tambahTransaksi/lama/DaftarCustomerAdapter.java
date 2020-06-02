@@ -1,6 +1,8 @@
 package bimo.syahputro.chromeinc.activity.tambahTransaksi.lama;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bimo.syahputro.chromeinc.R;
+import bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity;
 import bimo.syahputro.chromeinc.network.entity.Customer;
+
+import static bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity.ALAMAT_CUSTOMER;
+import static bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity.ID_CUSTOMER;
+import static bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity.NAMA_CUSTOMER;
+import static bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity.NOTELP_CUSTOMER;
 
 class DaftarCustomerAdapter extends RecyclerView.Adapter<DaftarCustomerAdapter.ViewHolder> implements Filterable {
     Context context;
@@ -68,8 +76,29 @@ class DaftarCustomerAdapter extends RecyclerView.Adapter<DaftarCustomerAdapter.V
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.tvNamaCustomer.setText(customerList.get(position).getNamaCustomer());
+
+        final String id_customer = customerList.get(position).getIdCustomer();
+        final String nama_customer = customerList.get(position).getNamaCustomer();
+        final String alamat_customer = customerList.get(position).getAlamat();
+        final String notelp_customer = customerList.get(position).getNoTelp();
+
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, TransaksiCustomerBaruActivity.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putString(ID_CUSTOMER, id_customer);
+                bundle.putString(NAMA_CUSTOMER, nama_customer);
+                bundle.putString(ALAMAT_CUSTOMER, alamat_customer);
+                bundle.putString(NOTELP_CUSTOMER, notelp_customer);
+
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

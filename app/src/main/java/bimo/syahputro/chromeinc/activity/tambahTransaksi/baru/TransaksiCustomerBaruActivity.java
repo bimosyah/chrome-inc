@@ -9,6 +9,10 @@ import android.view.MenuItem;
 import bimo.syahputro.chromeinc.R;
 
 public class TransaksiCustomerBaruActivity extends AppCompatActivity {
+    public static String ID_CUSTOMER = "ID_CUSTOMER";
+    public static String NAMA_CUSTOMER = "NAMA_CUSTOMER";
+    public static String ALAMAT_CUSTOMER = "ALAMAT_CUSTOMER";
+    public static String NOTELP_CUSTOMER = "NOTELP_CUSTOMER";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
