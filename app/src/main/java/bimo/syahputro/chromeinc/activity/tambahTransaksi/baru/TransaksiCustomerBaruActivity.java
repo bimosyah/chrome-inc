@@ -17,7 +17,7 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transaksi_customer_baru);
+        setContentView(R.layout.activity_transaksi);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
