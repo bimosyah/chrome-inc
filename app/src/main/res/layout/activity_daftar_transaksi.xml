@@ -8,12 +8,34 @@
 
     <include layout="@layout/content_daftar_transaksi" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fab_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_baseline_add" />
+        app:fab_labelStyle="@style/fabLabel">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_user_baru"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/white"
+            app:fab_colorPressed="#f1f1f1"
+            app:fab_icon="@drawable/ic_user_baru"
+            app:fab_size="normal"
+            app:fab_title="User Baru" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_user_lama"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/white"
+            app:fab_colorPressed="#f1f1f1"
+            app:fab_icon="@drawable/ic_user_lama"
+            app:fab_size="normal"
+            app:fab_title="User Lama" />
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

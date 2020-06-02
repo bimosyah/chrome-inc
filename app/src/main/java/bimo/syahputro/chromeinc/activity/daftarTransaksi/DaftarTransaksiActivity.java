@@ -1,5 +1,6 @@
 package bimo.syahputro.chromeinc.activity.daftarTransaksi;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -13,13 +14,15 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import bimo.syahputro.chromeinc.R;
+import bimo.syahputro.chromeinc.activity.tambahTransaksi.DaftarCustomerActivity;
+import bimo.syahputro.chromeinc.activity.tambahTransaksi.TransaksiCustomerBaruActivity;
 import bimo.syahputro.chromeinc.network.ApiClient;
 import bimo.syahputro.chromeinc.network.ApiService;
 import bimo.syahputro.chromeinc.network.entity.DaftarTransaksi;
@@ -31,7 +34,7 @@ import retrofit2.Response;
 import static androidx.recyclerview.widget.DividerItemDecoration.HORIZONTAL;
 
 public class DaftarTransaksiActivity extends AppCompatActivity {
-    FloatingActionButton fab;
+    FloatingActionButton fab_customer_lama, fab_customer_baru;
     List<DaftarTransaksi> barangList = new ArrayList<>();
     DaftarTransaksiAdapter transaksiAdapter;
     RecyclerView rvBarangMasuk;
@@ -51,11 +54,17 @@ public class DaftarTransaksiActivity extends AppCompatActivity {
         init();
         loadBarang();
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab_customer_baru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
+                startActivity(new Intent(DaftarTransaksiActivity.this, TransaksiCustomerBaruActivity.class));
+            }
+        });
+
+        fab_customer_lama.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DaftarTransaksiActivity.this, DaftarCustomerActivity.class));
             }
         });
     }
@@ -64,7 +73,8 @@ public class DaftarTransaksiActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressbar);
         rvBarangMasuk = findViewById(R.id.rv_barang_masuk);
         apiService = ApiClient.getClient().create(ApiService.class);
-        fab = findViewById(R.id.fab);
+        fab_customer_lama = findViewById(R.id.fab_user_lama);
+        fab_customer_baru = findViewById(R.id.fab_user_baru);
     }
 
     private void loadBarang() {

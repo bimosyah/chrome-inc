@@ -12,23 +12,34 @@
         android:supportsRtl="true"
         android:theme="@style/MyTheme"
         android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".activity.tambahTransaksi.DaftarCustomerActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".activity.tambahTransaksi.TransaksiCustomerBaruActivity"
+            android:theme="@style/AppTheme" />
+
         <activity
             android:name=".activity.detailTransaksi.DetailTransaksiActivity"
             android:theme="@style/AppTheme" />
+
         <activity
             android:name=".activity.daftarTransaksi.DaftarTransaksiActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activity.dashboard.DashboardActivity"
             android:theme="@style/MyTheme2" />
-        <activity android:name=".activity.login.LoginActivity">
-        </activity>
+
+        <activity android:name=".activity.login.LoginActivity" />
+
     </application>
 
 </manifest>
