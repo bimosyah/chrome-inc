@@ -7,4 +7,5 @@
     <color name="grey">@color/cardview_shadow_start_color</color>
     <color name="blue">#2196f3</color>
     <color name="black">#000</color>
+    <color name="transaksi_header">#757575</color>
 </resources>
