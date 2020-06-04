@@ -14,8 +14,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import bimo.syahputro.chromeinc.R;
 import bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.fragment.BarangFragment;
 import bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.fragment.CheckoutFragment;
@@ -32,6 +30,7 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
     TextView tvKiri, tvTengah, tvKanan;
     int posisi_fragment = 1;
     LinearLayout btnBack, btnNext;
+    String id_customer = "";
     String namaCustomer, alamatCustomer, notelpCustomer;
 
     @Override
@@ -45,6 +44,7 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
         }
 
         init();
+
         openFragment(fragmentCustomer);
 
         btnNext.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +124,19 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
         fragmentCheckout = new CheckoutFragment();
         btnBack = findViewById(R.id.btn_back);
         btnNext = findViewById(R.id.btn_next);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            id_customer = bundle.getString(ID_CUSTOMER);
+            String nama_customer = bundle.getString(NAMA_CUSTOMER);
+            String alamat_customer = bundle.getString(ALAMAT_CUSTOMER);
+            String notelp_customer = bundle.getString(NOTELP_CUSTOMER);
+            Bundle bundleCustomer = new Bundle();
+            bundleCustomer.putString(NAMA_CUSTOMER, nama_customer);
+            bundleCustomer.putString(ALAMAT_CUSTOMER, alamat_customer);
+            bundleCustomer.putString(NOTELP_CUSTOMER, notelp_customer);
+            fragmentCustomer.setArguments(bundleCustomer);
+        }
     }
 
     @Override
