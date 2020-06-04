@@ -22,7 +22,7 @@
             tools:entries="@array/spinner_status" />
 
         <EditText
-            android:id="@+id/et_alamat_customer"
+            android:id="@+id/et_qty"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
@@ -40,6 +40,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/blue"
         android:text="+"
+        android:textSize="25sp"
         android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearlayout2"

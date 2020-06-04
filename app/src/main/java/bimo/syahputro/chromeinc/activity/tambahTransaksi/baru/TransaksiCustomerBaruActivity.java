@@ -26,6 +26,7 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
     public static String NAMA_CUSTOMER = "NAMA_CUSTOMER";
     public static String ALAMAT_CUSTOMER = "ALAMAT_CUSTOMER";
     public static String NOTELP_CUSTOMER = "NOTELP_CUSTOMER";
+
     Fragment fragmentCustomer, fragmentBarang, fragmentCheckout;
     ImageView ivKiri, ivTengah, ivKanan;
     TextView tvKiri, tvTengah, tvKanan;
@@ -108,8 +109,6 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
         if (fragment != null) {
             fragment.passData();
         }
-        Snackbar.make(btnNext, namaCustomer + " " + notelpCustomer + " " + alamatCustomer, Snackbar.LENGTH_SHORT)
-                .show();
     }
 
 

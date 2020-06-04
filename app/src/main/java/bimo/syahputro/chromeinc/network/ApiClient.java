@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import bimo.syahputro.chromeinc.utils.Config;
 
 public class ApiClient {
-    private static final String BASE_URL = "http://192.168.1.6/tugasakhir/api/";
+    private static final String BASE_URL = Config.BASE_URL;
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient() {

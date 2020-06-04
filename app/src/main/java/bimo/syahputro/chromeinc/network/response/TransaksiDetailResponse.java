@@ -16,10 +16,20 @@ public class TransaksiDetailResponse {
     private Integer totalHarga;
     @SerializedName("gambar")
     private String gambar;
+    @SerializedName("estimasi")
+    private String estimasi;
     @SerializedName("detail_customer")
     private List<DetailTransaksiCustomer> detailTransaksiCustomer = null;
     @SerializedName("detail_barang")
     private List<DetailTransaksi> detailTransaksi = null;
+
+    public String getEstimasi() {
+        return estimasi;
+    }
+
+    public void setEstimasi(String estimasi) {
+        this.estimasi = estimasi;
+    }
 
     public Integer getStatus() {
         return status;

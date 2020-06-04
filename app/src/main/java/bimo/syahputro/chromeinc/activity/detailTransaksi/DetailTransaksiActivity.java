@@ -39,7 +39,7 @@ public class DetailTransaksiActivity extends AppCompatActivity {
     public static String ID_STATUS = "ID_STATUS";
 
     ConstraintLayout constraintLayout;
-    TextView tvNamaCustomer, tvAlamatCustomer, tvNomerCustomer, tvTotalTransaksi;
+    TextView tvNamaCustomer, tvAlamatCustomer, tvNomerCustomer, tvTotalTransaksi, tvEstimasi;
     List<DetailTransaksiCustomer> detailTransaksiCustomerList = new ArrayList<>();
     List<DetailTransaksi> detailTransaksiList = new ArrayList<>();
     DetailTransaksiAdapter adapter;
@@ -99,6 +99,7 @@ public class DetailTransaksiActivity extends AppCompatActivity {
                                     .load(response.body().getGambar())
                                     .into(ivGambarBarang);
                             tvTotalTransaksi.setText("Rp. " + response.body().getTotalHarga().toString());
+                            tvEstimasi.setText(response.body().getEstimasi() + " hari");
                             spinnerStatus.setSelection(Integer.parseInt(id_status_transaksi));
                             constraintLayout.setVisibility(View.VISIBLE);
                         }
@@ -141,6 +142,7 @@ public class DetailTransaksiActivity extends AppCompatActivity {
 
     private void init() {
         spinnerStatus = findViewById(R.id.spinner_status);
+        tvEstimasi = findViewById(R.id.tv_estimasi);
         rvDetailTransaksi = findViewById(R.id.rv_detail_transaksi);
         apiService = ApiClient.getClient().create(ApiService.class);
         constraintLayout = findViewById(R.id.constrain_layout);

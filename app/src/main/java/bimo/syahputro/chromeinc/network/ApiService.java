@@ -37,12 +37,9 @@ public interface ApiService {
             @Field("no_telp") String no_telp,
             @Field("alamat") String alamat,
             @Field("id_pegawai") String id_pegawai,
-            @Field("id_status") String id_status,
             @Field("gambar") String gambar,
             @Field("id_barang") String[] id_barang,
-            @Field("jumlah_barang") String[] jumlah_barang,
-            @Field("estimasi") String estimasi
-
+            @Field("jumlah_barang") String[] jumlah_barang
     );
 
     @GET("transaksi/getTransaksiById/{id_transaksi}")
