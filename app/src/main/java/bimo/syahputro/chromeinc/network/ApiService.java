@@ -1,6 +1,8 @@
 package bimo.syahputro.chromeinc.network;
 
 
+import java.util.ArrayList;
+
 import bimo.syahputro.chromeinc.network.response.BarangResponse;
 import bimo.syahputro.chromeinc.network.response.CustomerResponse;
 import bimo.syahputro.chromeinc.network.response.LoginResponse;
@@ -38,8 +40,8 @@ public interface ApiService {
             @Field("alamat") String alamat,
             @Field("id_pegawai") String id_pegawai,
             @Field("gambar") String gambar,
-            @Field("id_barang") String[] id_barang,
-            @Field("jumlah_barang") String[] jumlah_barang
+            @Field("id_barang[]") ArrayList<String> id_barang,
+            @Field("jumlah_barang[]") ArrayList<String> jumlah_barang
     );
 
     @GET("transaksi/getTransaksiById/{id_transaksi}")

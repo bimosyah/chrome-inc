@@ -38,9 +38,17 @@ public class BarangFragment extends Fragment {
     LinearLayout container_barang;
     ApiService apiService;
     View view;
-    ArrayList<String> array_id_barang = new ArrayList<String>();
-    ArrayList<String> array_nama_barang = new ArrayList<String>();
-    ArrayList<String> array_harga_barang = new ArrayList<String>();
+
+    ArrayList<String> array_id_barang = new ArrayList<>();
+    ArrayList<String> array_nama_barang = new ArrayList<>();
+    ArrayList<String> array_harga_barang = new ArrayList<>();
+
+    ArrayList<String> namaBarangList = new ArrayList<>();
+    ArrayList<String> idbarangList = new ArrayList<>();
+    ArrayList<String> jumlahBarangList = new ArrayList<>();
+    ArrayList<String> hargaBarangList = new ArrayList<>();
+
+    OnDataPassBarang passBarang;
 
     @Nullable
     @Override
@@ -72,9 +80,21 @@ public class BarangFragment extends Fragment {
                 });
 
                 if (!etBarangQty.getText().toString().equals("")) {
-                    tvBarang.setText(spinnerBarang.getSelectedItem().toString());
-                    tvBarangQty.setText(etBarangQty.getText().toString());
+
+                    String barang = spinnerBarang.getSelectedItem().toString();
+                    String jumlah = etBarangQty.getText().toString();
+                    String id_barang = array_id_barang.get(spinnerBarang.getSelectedItemPosition());
+                    String harga_barang = array_harga_barang.get(spinnerBarang.getSelectedItemPosition());
+
+                    namaBarangList.add(barang);
+                    idbarangList.add(id_barang);
+                    jumlahBarangList.add(jumlah);
+                    hargaBarangList.add(harga_barang);
+
+                    tvBarang.setText(barang);
+                    tvBarangQty.setText(jumlah);
                     container_barang.addView(addView);
+
                 }
 
             }
@@ -121,4 +141,21 @@ public class BarangFragment extends Fragment {
         btnAddBarang = view.findViewById(R.id.btn_tambah_barang);
         container_barang = view.findViewById(R.id.linearlayout_barang_container);
     }
+
+    public void passData() {
+
+        passBarang.passDataBarang(namaBarangList, idbarangList, jumlahBarangList, hargaBarangList);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        passBarang = (OnDataPassBarang) context;
+    }
+
+    public interface OnDataPassBarang {
+        void passDataBarang(ArrayList<String> barangList, ArrayList<String> idbarangList,
+                            ArrayList<String> jumlahBarangList, ArrayList<String> hargaBarangList);
+    }
+
 }

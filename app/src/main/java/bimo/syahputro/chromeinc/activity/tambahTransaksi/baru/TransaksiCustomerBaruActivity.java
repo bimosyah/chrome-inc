@@ -14,12 +14,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.util.ArrayList;
+
 import bimo.syahputro.chromeinc.R;
 import bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.fragment.BarangFragment;
 import bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.fragment.CheckoutFragment;
 import bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.fragment.CustomerFragment;
 
-public class TransaksiCustomerBaruActivity extends AppCompatActivity implements CustomerFragment.OnDataPassCustomer {
+public class TransaksiCustomerBaruActivity extends AppCompatActivity implements CustomerFragment.OnDataPassCustomer, BarangFragment.OnDataPassBarang {
     public static String ID_CUSTOMER = "ID_CUSTOMER";
     public static String NAMA_CUSTOMER = "NAMA_CUSTOMER";
     public static String ALAMAT_CUSTOMER = "ALAMAT_CUSTOMER";
@@ -33,6 +35,12 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
     String id_customer = "";
     String namaCustomer, alamatCustomer, notelpCustomer;
 
+    ArrayList<String> barangList;
+    ArrayList<String> idbarangList;
+    ArrayList<String> jumlahBarangList;
+    ArrayList<String> hargaBarangList;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +52,7 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
         }
 
         init();
+        cekCustomerLama();
 
         openFragment(fragmentCustomer);
 
@@ -63,7 +72,9 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
                 } else if (posisi_fragment == 2) {
                     posisi_fragment = 3;
 
+                    passCustomerDatatoCheckout();
                     openFragment(fragmentCheckout);
+                    callBarangData();
 
                     tvTengah.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.transaksi_header));
                     tvKanan.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
@@ -83,6 +94,7 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
                     tvKanan.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.transaksi_header));
                     tvTengah.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
                     ivTengah.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_adjust, getApplicationContext().getTheme()));
+
                 } else if (posisi_fragment == 2) {
                     posisi_fragment = 1;
 
@@ -111,6 +123,13 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
         }
     }
 
+    private void callBarangData() {
+        BarangFragment fragment = (BarangFragment) getSupportFragmentManager().findFragmentById(R.id.container_transaksi);
+        if (fragment != null) {
+            fragment.passData();
+        }
+    }
+
 
     private void init() {
         ivKiri = findViewById(R.id.iv_posisi_kiri);
@@ -124,19 +143,31 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
         fragmentCheckout = new CheckoutFragment();
         btnBack = findViewById(R.id.btn_back);
         btnNext = findViewById(R.id.btn_next);
+    }
 
+    private void cekCustomerLama() {
+        //cek data customer lama exist or not
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             id_customer = bundle.getString(ID_CUSTOMER);
             String nama_customer = bundle.getString(NAMA_CUSTOMER);
             String alamat_customer = bundle.getString(ALAMAT_CUSTOMER);
             String notelp_customer = bundle.getString(NOTELP_CUSTOMER);
+
             Bundle bundleCustomer = new Bundle();
             bundleCustomer.putString(NAMA_CUSTOMER, nama_customer);
             bundleCustomer.putString(ALAMAT_CUSTOMER, alamat_customer);
             bundleCustomer.putString(NOTELP_CUSTOMER, notelp_customer);
             fragmentCustomer.setArguments(bundleCustomer);
         }
+    }
+
+    private void passCustomerDatatoCheckout(){
+        Bundle bundleCustomer = new Bundle();
+        bundleCustomer.putString(NAMA_CUSTOMER, namaCustomer);
+        bundleCustomer.putString(ALAMAT_CUSTOMER, alamatCustomer);
+        bundleCustomer.putString(NOTELP_CUSTOMER, notelpCustomer);
+        fragmentCheckout.setArguments(bundleCustomer);
     }
 
     @Override
@@ -158,5 +189,13 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
         namaCustomer = nama;
         alamatCustomer = alamat;
         notelpCustomer = notelp;
+    }
+
+    @Override
+    public void passDataBarang(ArrayList<String> barangList, ArrayList<String> idbarangList, ArrayList<String> jumlahBarangList, ArrayList<String> hargaBarangList) {
+        this.barangList = barangList;
+        this.idbarangList = idbarangList;
+        this.jumlahBarangList = jumlahBarangList;
+        this.hargaBarangList = hargaBarangList;
     }
 }
