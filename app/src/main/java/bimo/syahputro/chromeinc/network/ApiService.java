@@ -34,11 +34,12 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("transaksi/insertTransaksi")
-    Call<TransaksiBaruResponse> newTransaksi(
+    Call<TransaksiBaruResponse> transaksiBaru(
             @Field("nama_customer") String nama_customer,
             @Field("no_telp") String no_telp,
             @Field("alamat") String alamat,
             @Field("id_pegawai") String id_pegawai,
+            @Field("id_customer") String id_customer,
             @Field("gambar") String gambar,
             @Field("id_barang[]") ArrayList<String> id_barang,
             @Field("jumlah_barang[]") ArrayList<String> jumlah_barang

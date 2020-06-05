@@ -22,6 +22,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/btn_back"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -48,6 +49,7 @@
                 android:gravity="center">
 
                 <TextView
+                    android:id="@+id/tv_btn_next"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"

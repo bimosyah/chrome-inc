@@ -1,5 +1,6 @@
 package bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -44,7 +45,8 @@ public class CheckoutFragment extends Fragment {
     ArrayList<String> jumlahBarangList;
     ArrayList<String> hargaBarangList;
     CheckoutAdapter adapter;
-
+    OnDataPassCheckout dataParser;
+    Bitmap bitmapBarang;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -121,7 +123,22 @@ public class CheckoutFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Bitmap capturedImage = (Bitmap) data.getExtras().get("data");
-        ivBarang.setImageBitmap(capturedImage);
+        bitmapBarang = capturedImage;
+        ivBarang.setImageBitmap(bitmapBarang);
 
+    }
+
+    public void passData() {
+        dataParser.passDataCheckout(bitmapBarang);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        dataParser = (OnDataPassCheckout) context;
+    }
+
+    public interface OnDataPassCheckout {
+        void passDataCheckout(Bitmap bitmap);
     }
 }

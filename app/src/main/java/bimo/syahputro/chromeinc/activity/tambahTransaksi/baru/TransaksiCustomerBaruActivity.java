@@ -1,7 +1,8 @@
 package bimo.syahputro.chromeinc.activity.tambahTransaksi.baru;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,14 +16,24 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.snackbar.Snackbar;
+
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 import bimo.syahputro.chromeinc.R;
 import bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.fragment.BarangFragment;
 import bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.fragment.CheckoutFragment;
 import bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.fragment.CustomerFragment;
+import bimo.syahputro.chromeinc.network.ApiClient;
+import bimo.syahputro.chromeinc.network.ApiService;
+import bimo.syahputro.chromeinc.network.response.TransaksiBaruResponse;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class TransaksiCustomerBaruActivity extends AppCompatActivity implements CustomerFragment.OnDataPassCustomer, BarangFragment.OnDataPassBarang {
+public class TransaksiCustomerBaruActivity extends AppCompatActivity implements CustomerFragment.OnDataPassCustomer,
+        BarangFragment.OnDataPassBarang, CheckoutFragment.OnDataPassCheckout {
     public static String ID_CUSTOMER = "ID_CUSTOMER";
     public static String NAMA_CUSTOMER = "NAMA_CUSTOMER";
     public static String ALAMAT_CUSTOMER = "ALAMAT_CUSTOMER";
@@ -32,21 +43,20 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
     public static String JUMLAHBARANGLIST = "JUMLAHBARANGLIST";
     public static String HARGABARANGLIST = "HARGABARANGLIST";
 
-
-
     Fragment fragmentCustomer, fragmentBarang, fragmentCheckout;
     ImageView ivKiri, ivTengah, ivKanan;
-    TextView tvKiri, tvTengah, tvKanan;
+    TextView tvKiri, tvTengah, tvKanan, tvBtnNext;
     int posisi_fragment = 1;
     LinearLayout btnBack, btnNext;
     String id_customer = "";
     String namaCustomer, alamatCustomer, notelpCustomer;
-
+    Bitmap bitmapBarang;
+    String imageConvert;
     ArrayList<String> barangList;
     ArrayList<String> idbarangList;
     ArrayList<String> jumlahBarangList;
     ArrayList<String> hargaBarangList;
-
+    private ApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,57 +77,49 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
             @Override
             public void onClick(View view) {
                 if (posisi_fragment == 1) {
-                    posisi_fragment = 2;
-
-                    openFragment(fragmentBarang);
                     callCustomerData();
+                    if (!namaCustomer.equals("") || !alamatCustomer.equals("") || !notelpCustomer.equals("")) {
+                        posisi_fragment = 2;
 
-                    tvKiri.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.transaksi_header));
-                    tvTengah.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
-                    ivKiri.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_brightness, getApplicationContext().getTheme()));
+                        openFragment(fragmentBarang);
+
+                        tvKiri.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.transaksi_header));
+                        tvTengah.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                        ivKiri.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_brightness, getApplicationContext().getTheme()));
+                    } else {
+                        Snackbar.make(btnNext, "Data customer harus diisi", Snackbar.LENGTH_SHORT)
+                                .show();
+                    }
 
                 } else if (posisi_fragment == 2) {
-                    posisi_fragment = 3;
-
-                    openFragment(fragmentCheckout);
                     callBarangData();
-                    passCustomerandBarangDatatoCheckout();
 
-//                    Log.d("barang",String.valueOf(barangList.size()));
-//                    Log.d("id barang",String.valueOf(idbarangList.size()));
-//                    Log.d("jumlah barang",String.valueOf(jumlahBarangList.size()));
-//                    Log.d("harga barang",String.valueOf(hargaBarangList.size()));
+                    if (barangList.size() != 0) {
+                        posisi_fragment = 3;
+                        openFragment(fragmentCheckout);
+                        passCustomerandBarangDatatoCheckout();
 
-                    tvTengah.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.transaksi_header));
-                    tvKanan.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
-                    ivTengah.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_brightness, getApplicationContext().getTheme()));
+                        tvBtnNext.setText("Buat Transaksi");
+                        tvTengah.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.transaksi_header));
+                        tvKanan.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                        ivTengah.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_brightness, getApplicationContext().getTheme()));
+                    } else {
+                        Snackbar.make(btnNext, "Data barang harus diisi", Snackbar.LENGTH_SHORT)
+                                .show();
+                    }
+                } else if (posisi_fragment == 3) {
+                    callCheckoutData();
+                    if (bitmapBarang != null) {
+                        imageConvert = imageToString();
+                        transaksiBaru();
+                    } else {
+                        Snackbar.make(btnNext, "Gambar barang harus diisi", Snackbar.LENGTH_SHORT)
+                                .show();
+                    }
                 }
             }
         });
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (posisi_fragment == 3) {
-                    posisi_fragment = 2;
-
-                    openFragment(fragmentBarang);
-
-                    tvKanan.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.transaksi_header));
-                    tvTengah.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
-                    ivTengah.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_adjust, getApplicationContext().getTheme()));
-
-                } else if (posisi_fragment == 2) {
-                    posisi_fragment = 1;
-
-                    openFragment(fragmentCustomer);
-
-                    tvKiri.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
-                    tvTengah.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.transaksi_header));
-                    ivKiri.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_adjust, getApplicationContext().getTheme()));
-                }
-            }
-        });
     }
 
     private void openFragment(final Fragment fragment) {
@@ -142,8 +144,16 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
         }
     }
 
+    private void callCheckoutData() {
+        CheckoutFragment fragment = (CheckoutFragment) getSupportFragmentManager().findFragmentById(R.id.container_transaksi);
+        if (fragment != null) {
+            fragment.passData();
+        }
+    }
 
     private void init() {
+        apiService = ApiClient.getClient().create(ApiService.class);
+        tvBtnNext = findViewById(R.id.tv_btn_next);
         ivKiri = findViewById(R.id.iv_posisi_kiri);
         ivTengah = findViewById(R.id.iv_posisi_tengah);
         tvKanan = findViewById(R.id.tv_posisi_kanan);
@@ -174,15 +184,15 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
         }
     }
 
-    private void passCustomerandBarangDatatoCheckout(){
+    private void passCustomerandBarangDatatoCheckout() {
         Bundle bundle = new Bundle();
         bundle.putString(NAMA_CUSTOMER, namaCustomer);
         bundle.putString(ALAMAT_CUSTOMER, alamatCustomer);
         bundle.putString(NOTELP_CUSTOMER, notelpCustomer);
-        bundle.putStringArrayList(BARANGLIST,barangList);
-        bundle.putStringArrayList(IDBARANGLIST,idbarangList);
-        bundle.putStringArrayList(JUMLAHBARANGLIST,jumlahBarangList);
-        bundle.putStringArrayList(HARGABARANGLIST,hargaBarangList);
+        bundle.putStringArrayList(BARANGLIST, barangList);
+        bundle.putStringArrayList(IDBARANGLIST, idbarangList);
+        bundle.putStringArrayList(JUMLAHBARANGLIST, jumlahBarangList);
+        bundle.putStringArrayList(HARGABARANGLIST, hargaBarangList);
         fragmentCheckout.setArguments(bundle);
     }
 
@@ -213,5 +223,46 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
         this.idbarangList = idbarangList;
         this.jumlahBarangList = jumlahBarangList;
         this.hargaBarangList = hargaBarangList;
+    }
+
+    @Override
+    public void passDataCheckout(Bitmap bitmap) {
+        this.bitmapBarang = bitmap;
+    }
+
+    private String imageToString() {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmapBarang.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] imgByte = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imgByte, Base64.DEFAULT);
+    }
+
+    private void transaksiBaru() {
+        apiService.transaksiBaru(
+                namaCustomer, notelpCustomer,
+                alamatCustomer, "1",
+                id_customer,imageConvert,
+                idbarangList, jumlahBarangList).enqueue(new Callback<TransaksiBaruResponse>() {
+            @Override
+            public void onResponse(Call<TransaksiBaruResponse> call, Response<TransaksiBaruResponse> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null){
+                        if (response.body().getStatus() == 1){
+                            Snackbar.make(btnNext, "Berhasil", Snackbar.LENGTH_SHORT)
+                                    .show();
+                        }else {
+                            Snackbar.make(btnNext, "gagal", Snackbar.LENGTH_SHORT)
+                                    .show();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TransaksiBaruResponse> call, Throwable t) {
+                Snackbar.make(btnNext, t.getMessage(), Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        });
     }
 }
