@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -39,6 +40,7 @@ public class DaftarTransaksiActivity extends AppCompatActivity {
     DaftarTransaksiAdapter transaksiAdapter;
     RecyclerView rvBarangMasuk;
     ProgressBar progressBar;
+    TextView tvTransaksiKosong;
     private ApiService apiService;
 
     @Override
@@ -75,6 +77,7 @@ public class DaftarTransaksiActivity extends AppCompatActivity {
         apiService = ApiClient.getClient().create(ApiService.class);
         fab_customer_lama = findViewById(R.id.fab_user_lama);
         fab_customer_baru = findViewById(R.id.fab_user_baru);
+        tvTransaksiKosong = findViewById(R.id.tv_transaksi_kosong);
     }
 
     private void loadBarang() {
@@ -92,6 +95,14 @@ public class DaftarTransaksiActivity extends AppCompatActivity {
                                     barangList = response.body().getDaftarTransaksi();
                                     setupRecyclerView();
                                 }
+                            }, 3000);
+                        }else {
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressBar.setVisibility(View.GONE);
+                                    tvTransaksiKosong.setVisibility(View.VISIBLE);
+                                    }
                             }, 3000);
                         }
                     }

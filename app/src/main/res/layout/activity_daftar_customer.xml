@@ -32,4 +32,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/progressbar"
         tools:listitem="@layout/item_daftar_transaksi" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_customer_kosong"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:text="Tidak ada customer"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

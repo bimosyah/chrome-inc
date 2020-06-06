@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -35,6 +36,7 @@ public class DaftarCustomerActivity extends AppCompatActivity {
     List<Customer> customerList = new ArrayList<>();
     DaftarCustomerAdapter daftarCustomerAdapter;
     ProgressBar progressBar;
+    TextView tvCustomerKosong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class DaftarCustomerActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressbar);
         apiService = ApiClient.getClient().create(ApiService.class);
         rvCustomer = findViewById(R.id.rv_customer);
+        tvCustomerKosong = findViewById(R.id.tv_customer_kosong);
     }
 
     private void loadCustomer() {
@@ -70,6 +73,14 @@ public class DaftarCustomerActivity extends AppCompatActivity {
                                     progressBar.setVisibility(View.GONE);
                                     customerList = response.body().getDataCustomer();
                                     setupRecyclerView();
+                                }
+                            }, 3000);
+                        }else {
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressBar.setVisibility(View.GONE);
+                                    tvCustomerKosong.setVisibility(View.VISIBLE);
                                 }
                             }, 3000);
                         }

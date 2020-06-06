@@ -241,16 +241,16 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
         apiService.transaksiBaru(
                 namaCustomer, notelpCustomer,
                 alamatCustomer, "1",
-                id_customer,imageConvert,
+                id_customer, imageConvert,
                 idbarangList, jumlahBarangList).enqueue(new Callback<TransaksiBaruResponse>() {
             @Override
             public void onResponse(Call<TransaksiBaruResponse> call, Response<TransaksiBaruResponse> response) {
                 if (response.isSuccessful()) {
-                    if (response.body() != null){
-                        if (response.body().getStatus() == 1){
+                    if (response.body() != null) {
+                        if (response.body().getStatus() == 1) {
                             Snackbar.make(btnNext, "Berhasil", Snackbar.LENGTH_SHORT)
                                     .show();
-                        }else {
+                        } else {
                             Snackbar.make(btnNext, "gagal", Snackbar.LENGTH_SHORT)
                                     .show();
                         }
