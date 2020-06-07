@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import bimo.syahputro.chromeinc.network.response.BarangResponse;
 import bimo.syahputro.chromeinc.network.response.CustomerResponse;
 import bimo.syahputro.chromeinc.network.response.InventoryBaruResponse;
+import bimo.syahputro.chromeinc.network.response.InventoryResponse;
 import bimo.syahputro.chromeinc.network.response.LoginResponse;
 import bimo.syahputro.chromeinc.network.response.TransaksiBaruResponse;
 import bimo.syahputro.chromeinc.network.response.TransaksiDetailResponse;
@@ -75,4 +76,8 @@ public interface ApiService {
             @Field("harga_beli") String harga_beli,
             @Field("keterangan") String keterangan
     );
+
+    @GET("inventory/daftartInventory")
+    Call<InventoryResponse> daftarInventory();
+
 }
