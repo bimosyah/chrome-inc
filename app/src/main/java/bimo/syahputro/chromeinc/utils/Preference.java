@@ -10,17 +10,15 @@ public class Preference {
     static final String KEY_USERNAME_SEDANG_LOGIN = "Username_logged_in";
     static final String KEY_STATUS_SEDANG_LOGIN = "Status_logged_in";
     static final String KEY_ID_USER = "key_id_user";
-    static final String KEY_ID_USER2 = "key_id_user";
 
     private static SharedPreferences getSharedPreference(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    public static void setRegisteredUser(Context context, String username, String id_user, String id_user2) {
+    public static void setRegisteredUser(Context context, String username, String id_user) {
         SharedPreferences.Editor editor = getSharedPreference(context).edit();
-        editor.putString(KEY_USER_TEREGISTER, username);
+        editor.putString(KEY_USERNAME_SEDANG_LOGIN, username);
         editor.putString(KEY_ID_USER,id_user);
-        editor.putString(KEY_ID_USER2,id_user2);
         editor.apply();
     }
 
@@ -33,10 +31,6 @@ public class Preference {
 
     public static String getIdUser(Context context) {
         return getSharedPreference(context).getString(KEY_ID_USER, "");
-    }
-
-    public static String getIdUser2(Context context) {
-        return getSharedPreference(context).getString(KEY_ID_USER2, "");
     }
 
     public static String getUsername(Context context) {

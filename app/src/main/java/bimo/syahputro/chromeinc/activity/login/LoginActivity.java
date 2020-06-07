@@ -90,22 +90,21 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.et_password);
     }
 
-    private void login(final String username, String password) {
+    private void login(String username, String password) {
         apiService.login(username, password).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, final Response<LoginResponse> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         if (response.body().getStatus() == 1) {
+                            final String username = response.body().getPegawai().getNamaPegawai();
+                            final String id_user = response.body().getPegawai().getIdPegawai();
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                     progressBar.setVisibility(View.GONE);
-                                    Preference.setRegisteredUser(getApplicationContext(), "nin", response.body().getPegawai().getIdPegawai(),username);
-                                    Preference.setUsername(getApplicationContext(), response.body().getPegawai().getNamaPegawai());
-                                    Log.d("nama_user2", Preference.getUsername(getBaseContext()));
-                                    Log.d("nama_user3", response.body().getPegawai().getNamaPegawai());
+                                    Preference.setRegisteredUser(getApplicationContext(), username, id_user);
                                     Preference.setLoggedInStatus(getApplicationContext(), true);
                                     startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
                                 }

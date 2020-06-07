@@ -35,6 +35,7 @@ import bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.fragment.CustomerF
 import bimo.syahputro.chromeinc.network.ApiClient;
 import bimo.syahputro.chromeinc.network.ApiService;
 import bimo.syahputro.chromeinc.network.response.TransaksiBaruResponse;
+import bimo.syahputro.chromeinc.utils.Preference;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -247,7 +248,7 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
     private void transaksiBaru() {
         apiService.transaksiBaru(
                 namaCustomer, notelpCustomer,
-                alamatCustomer, "1",
+                alamatCustomer, Preference.getIdUser(getApplicationContext()),
                 id_customer, imageConvert,
                 idbarangList, jumlahBarangList).enqueue(new Callback<TransaksiBaruResponse>() {
             @Override

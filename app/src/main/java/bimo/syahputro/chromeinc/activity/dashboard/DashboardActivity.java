@@ -33,9 +33,7 @@ public class DashboardActivity extends AppCompatActivity {
         init();
         anim();
 
-        tvUsername.setText(Preference.getIdUser2(getBaseContext()));
-        Log.d("nama_user", Preference.getUsername(getBaseContext()));
-        Log.d("id_user", Preference.getIdUser(getBaseContext()));
+        tvUsername.setText(Preference.getUsername(getBaseContext()));
 
         cardBarang.setOnClickListener(new View.OnClickListener() {
             @Override
