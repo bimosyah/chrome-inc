@@ -3,6 +3,7 @@ package bimo.syahputro.chromeinc.activity.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -22,6 +23,7 @@ import bimo.syahputro.chromeinc.activity.dashboard.DashboardActivity;
 import bimo.syahputro.chromeinc.network.ApiClient;
 import bimo.syahputro.chromeinc.network.ApiService;
 import bimo.syahputro.chromeinc.network.response.LoginResponse;
+import bimo.syahputro.chromeinc.utils.Preference;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,6 +44,15 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         init();
         anim();
+
+        if (Preference.getLoggedInStatus(this)){
+            if (getIntent().getBooleanExtra("EXIT", false)) {
+                finish();
+            }else {
+                startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+            }
+        }
+
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,10 +90,10 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.et_password);
     }
 
-    private void login(String username, String password) {
+    private void login(final String username, String password) {
         apiService.login(username, password).enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(Call<LoginResponse> call, final Response<LoginResponse> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         if (response.body().getStatus() == 1) {
@@ -91,6 +102,11 @@ public class LoginActivity extends AppCompatActivity {
                                 public void run() {
                                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                     progressBar.setVisibility(View.GONE);
+                                    Preference.setRegisteredUser(getApplicationContext(), "nin", response.body().getPegawai().getIdPegawai(),username);
+                                    Preference.setUsername(getApplicationContext(), response.body().getPegawai().getNamaPegawai());
+                                    Log.d("nama_user2", Preference.getUsername(getBaseContext()));
+                                    Log.d("nama_user3", response.body().getPegawai().getNamaPegawai());
+                                    Preference.setLoggedInStatus(getApplicationContext(), true);
                                     startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
                                 }
                             }, 3000);

@@ -2,6 +2,7 @@ package bimo.syahputro.chromeinc.activity.dashboard;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -14,6 +15,8 @@ import androidx.cardview.widget.CardView;
 
 import bimo.syahputro.chromeinc.R;
 import bimo.syahputro.chromeinc.activity.daftarTransaksi.DaftarTransaksiActivity;
+import bimo.syahputro.chromeinc.activity.login.LoginActivity;
+import bimo.syahputro.chromeinc.utils.Preference;
 
 public class DashboardActivity extends AppCompatActivity {
     TextView tvUsername, tvRole;
@@ -29,6 +32,10 @@ public class DashboardActivity extends AppCompatActivity {
 
         init();
         anim();
+
+        tvUsername.setText(Preference.getIdUser2(getBaseContext()));
+        Log.d("nama_user", Preference.getUsername(getBaseContext()));
+        Log.d("id_user", Preference.getIdUser(getBaseContext()));
 
         cardBarang.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,5 +61,14 @@ public class DashboardActivity extends AppCompatActivity {
         tvRole = findViewById(R.id.tv_role);
         ivPerson = findViewById(R.id.iv_person);
         tvUsername = findViewById(R.id.tv_username);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("EXIT", true);
+        startActivity(intent);
     }
 }
