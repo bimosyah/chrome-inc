@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/et_nama_barang"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/action_detail"
+        android:hint="Nama Barang"
+        android:paddingStart="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_jumlah_barang"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/action_detail"
+        android:hint="Jumlah"
+        android:inputType="number"
+        android:paddingStart="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_nama_barang" />
+
+    <EditText
+        android:id="@+id/et_satuan_barang"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/action_detail"
+        android:hint="Satuan"
+        android:paddingStart="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_jumlah_barang" />
+
+    <EditText
+        android:id="@+id/et_hargabeli_barang"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/action_detail"
+        android:hint="Harga Beli"
+        android:inputType="number"
+        android:paddingStart="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_satuan_barang" />
+
+    <EditText
+        android:id="@+id/et_keterangan_barang"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/action_detail"
+        android:hint="Keterangan"
+        android:paddingStart="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_hargabeli_barang" />
+
+    <Button
+        android:id="@+id/btn_req_barang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/blue"
+        android:text="Request Barang"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_keterangan_barang" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

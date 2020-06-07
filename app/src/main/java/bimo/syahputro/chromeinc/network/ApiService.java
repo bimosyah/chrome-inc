@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import bimo.syahputro.chromeinc.network.response.BarangResponse;
 import bimo.syahputro.chromeinc.network.response.CustomerResponse;
+import bimo.syahputro.chromeinc.network.response.InventoryBaruResponse;
 import bimo.syahputro.chromeinc.network.response.LoginResponse;
 import bimo.syahputro.chromeinc.network.response.TransaksiBaruResponse;
 import bimo.syahputro.chromeinc.network.response.TransaksiDetailResponse;
@@ -64,4 +65,14 @@ public interface ApiService {
 
     @GET("customer/loadCustomer")
     Call<CustomerResponse> daftarCustomer();
+
+    @FormUrlEncoded
+    @POST("inventory/insertInventory")
+    Call<InventoryBaruResponse> inventoryBaru(
+            @Field("nama_inv") String nama_inv,
+            @Field("jumlah") String jumlah,
+            @Field("satuan") String satuan,
+            @Field("harga_beli") String harga_beli,
+            @Field("keterangan") String keterangan
+    );
 }

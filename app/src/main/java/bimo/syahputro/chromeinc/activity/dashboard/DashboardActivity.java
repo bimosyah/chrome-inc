@@ -2,7 +2,6 @@ package bimo.syahputro.chromeinc.activity.dashboard;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -16,6 +15,7 @@ import androidx.cardview.widget.CardView;
 import bimo.syahputro.chromeinc.R;
 import bimo.syahputro.chromeinc.activity.daftarTransaksi.DaftarTransaksiActivity;
 import bimo.syahputro.chromeinc.activity.login.LoginActivity;
+import bimo.syahputro.chromeinc.activity.daftarReqBarang.DaftarReqBarangActivity;
 import bimo.syahputro.chromeinc.utils.Preference;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -39,6 +39,13 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(DashboardActivity.this, DaftarTransaksiActivity.class));
+            }
+        });
+
+        cardRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DashboardActivity.this, DaftarReqBarangActivity.class));
             }
         });
 
