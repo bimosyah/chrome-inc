@@ -46,7 +46,7 @@
     <GridLayout
         android:id="@+id/gl_menu"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="500dp"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="400dp"
         android:alignmentMode="alignMargins"
@@ -130,6 +130,45 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="Request Barang"
+                    android:textSize="19dp" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_logout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="6dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="16dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ic_baseline_info" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Logout"
                     android:textSize="19dp" />
 
             </LinearLayout>
