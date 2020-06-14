@@ -14,11 +14,6 @@
         android:theme="@style/MyTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".activity.NotifActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.reqBarang.ReqBarangActivity"
@@ -41,7 +36,13 @@
         <activity
             android:name=".activity.dashboard.DashboardActivity"
             android:theme="@style/MyTheme2" />
-        <activity android:name=".activity.login.LoginActivity"></activity>
+        <activity android:name=".activity.login.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

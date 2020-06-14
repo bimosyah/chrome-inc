@@ -23,7 +23,7 @@ public class DashboardActivity extends AppCompatActivity {
     ImageView ivPerson;
     Animation dashboard_head;
     GridLayout glMenu;
-    CardView cardBarang, cardRequest;
+    CardView cardBarang, cardRequest, cardLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +49,15 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
+        cardLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Preference.clearLoggedInUser(getApplicationContext());
+                startActivity(new Intent(DashboardActivity.this, LoginActivity.class));
+                finish();
+            }
+        });
+
     }
 
     private void anim() {
@@ -61,6 +70,7 @@ public class DashboardActivity extends AppCompatActivity {
     private void init() {
         cardBarang = findViewById(R.id.card_barang);
         cardRequest = findViewById(R.id.card_request);
+        cardLogout = findViewById(R.id.card_logout);
         dashboard_head = AnimationUtils.loadAnimation(this, R.anim.dashboard_head);
         glMenu = findViewById(R.id.gl_menu);
         tvRole = findViewById(R.id.tv_role);
