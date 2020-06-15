@@ -1,4 +1,4 @@
-package bimo.syahputro.chromeinc.activity.tambahTransaksi.baru;
+package bimo.syahputro.chromeinc.activity.transaksi.tambahTransaksi.baru;
 
 import android.content.ComponentName;
 import android.content.Intent;
@@ -9,14 +9,12 @@ import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.IntentCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -28,10 +26,9 @@ import java.util.ArrayList;
 
 import bimo.syahputro.chromeinc.R;
 import bimo.syahputro.chromeinc.activity.dashboard.DashboardActivity;
-import bimo.syahputro.chromeinc.activity.login.LoginActivity;
-import bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.fragment.BarangFragment;
-import bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.fragment.CheckoutFragment;
-import bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.fragment.CustomerFragment;
+import bimo.syahputro.chromeinc.activity.transaksi.tambahTransaksi.baru.fragment.BarangFragment;
+import bimo.syahputro.chromeinc.activity.transaksi.tambahTransaksi.baru.fragment.CheckoutFragment;
+import bimo.syahputro.chromeinc.activity.transaksi.tambahTransaksi.baru.fragment.CustomerFragment;
 import bimo.syahputro.chromeinc.network.ApiClient;
 import bimo.syahputro.chromeinc.network.ApiService;
 import bimo.syahputro.chromeinc.network.response.TransaksiBaruResponse;

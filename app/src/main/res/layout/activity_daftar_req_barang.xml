@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".activity.daftarReqBarang.DaftarReqBarangActivity">
+    tools:context=".activity.request.daftarReqBarang.DaftarReqBarangActivity">
 
     <include layout="@layout/content_daftar_req_barang"/>
 

@@ -1,4 +1,4 @@
-package bimo.syahputro.chromeinc.activity.tambahTransaksi.lama;
+package bimo.syahputro.chromeinc.activity.transaksi.tambahTransaksi.lama;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,13 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bimo.syahputro.chromeinc.R;
-import bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity;
+import bimo.syahputro.chromeinc.activity.transaksi.tambahTransaksi.baru.TransaksiCustomerBaruActivity;
 import bimo.syahputro.chromeinc.network.entity.Customer;
-
-import static bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity.ALAMAT_CUSTOMER;
-import static bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity.ID_CUSTOMER;
-import static bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity.NAMA_CUSTOMER;
-import static bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity.NOTELP_CUSTOMER;
 
 class DaftarCustomerAdapter extends RecyclerView.Adapter<DaftarCustomerAdapter.ViewHolder> implements Filterable {
     Context context;
@@ -90,10 +85,10 @@ class DaftarCustomerAdapter extends RecyclerView.Adapter<DaftarCustomerAdapter.V
                 Intent intent = new Intent(context, TransaksiCustomerBaruActivity.class);
 
                 Bundle bundle = new Bundle();
-                bundle.putString(ID_CUSTOMER, id_customer);
-                bundle.putString(NAMA_CUSTOMER, nama_customer);
-                bundle.putString(ALAMAT_CUSTOMER, alamat_customer);
-                bundle.putString(NOTELP_CUSTOMER, notelp_customer);
+                bundle.putString(TransaksiCustomerBaruActivity.ID_CUSTOMER, id_customer);
+                bundle.putString(TransaksiCustomerBaruActivity.NAMA_CUSTOMER, nama_customer);
+                bundle.putString(TransaksiCustomerBaruActivity.ALAMAT_CUSTOMER, alamat_customer);
+                bundle.putString(TransaksiCustomerBaruActivity.NOTELP_CUSTOMER, notelp_customer);
 
                 intent.putExtras(bundle);
                 context.startActivity(intent);

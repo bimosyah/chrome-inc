@@ -13,9 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import bimo.syahputro.chromeinc.R;
-import bimo.syahputro.chromeinc.activity.daftarTransaksi.DaftarTransaksiActivity;
+import bimo.syahputro.chromeinc.activity.transaksi.daftarTransaksi.DaftarTransaksiActivity;
 import bimo.syahputro.chromeinc.activity.login.LoginActivity;
-import bimo.syahputro.chromeinc.activity.daftarReqBarang.DaftarReqBarangActivity;
+import bimo.syahputro.chromeinc.activity.request.daftarReqBarang.DaftarReqBarangActivity;
 import bimo.syahputro.chromeinc.utils.Preference;
 
 public class DashboardActivity extends AppCompatActivity {

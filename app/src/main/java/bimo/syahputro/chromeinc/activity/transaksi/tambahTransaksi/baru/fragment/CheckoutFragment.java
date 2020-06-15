@@ -1,4 +1,4 @@
-package bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.fragment;
+package bimo.syahputro.chromeinc.activity.transaksi.tambahTransaksi.baru.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,17 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import bimo.syahputro.chromeinc.R;
-import bimo.syahputro.chromeinc.activity.detailTransaksi.DetailTransaksiActivity;
-import bimo.syahputro.chromeinc.activity.detailTransaksi.DetailTransaksiAdapter;
+import bimo.syahputro.chromeinc.activity.transaksi.tambahTransaksi.baru.TransaksiCustomerBaruActivity;
 
 import static androidx.recyclerview.widget.DividerItemDecoration.HORIZONTAL;
-import static bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity.ALAMAT_CUSTOMER;
-import static bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity.BARANGLIST;
-import static bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity.HARGABARANGLIST;
-import static bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity.IDBARANGLIST;
-import static bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity.JUMLAHBARANGLIST;
-import static bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity.NAMA_CUSTOMER;
-import static bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity.NOTELP_CUSTOMER;
 
 public class CheckoutFragment extends Fragment {
     View view;
@@ -54,13 +46,13 @@ public class CheckoutFragment extends Fragment {
         init();
 
         if (getArguments() != null) {
-            namaCustomer = getArguments().getString(NAMA_CUSTOMER);
-            alamatCustomer = getArguments().getString(ALAMAT_CUSTOMER);
-            notelpCustomer = getArguments().getString(NOTELP_CUSTOMER);
-            barangList = getArguments().getStringArrayList(BARANGLIST);
-            idbarangList = getArguments().getStringArrayList(IDBARANGLIST);
-            jumlahBarangList = getArguments().getStringArrayList(JUMLAHBARANGLIST);
-            hargaBarangList = getArguments().getStringArrayList(HARGABARANGLIST);
+            namaCustomer = getArguments().getString(TransaksiCustomerBaruActivity.NAMA_CUSTOMER);
+            alamatCustomer = getArguments().getString(TransaksiCustomerBaruActivity.ALAMAT_CUSTOMER);
+            notelpCustomer = getArguments().getString(TransaksiCustomerBaruActivity.NOTELP_CUSTOMER);
+            barangList = getArguments().getStringArrayList(TransaksiCustomerBaruActivity.BARANGLIST);
+            idbarangList = getArguments().getStringArrayList(TransaksiCustomerBaruActivity.IDBARANGLIST);
+            jumlahBarangList = getArguments().getStringArrayList(TransaksiCustomerBaruActivity.JUMLAHBARANGLIST);
+            hargaBarangList = getArguments().getStringArrayList(TransaksiCustomerBaruActivity.HARGABARANGLIST);
 
         }
 

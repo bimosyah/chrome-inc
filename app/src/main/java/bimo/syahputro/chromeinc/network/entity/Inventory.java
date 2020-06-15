@@ -1,8 +1,11 @@
 package bimo.syahputro.chromeinc.network.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Inventory {
+public class Inventory implements Parcelable {
     @SerializedName("id_inventory")
     private String idInventory;
     @SerializedName("no_inv")
@@ -15,6 +18,8 @@ public class Inventory {
     private String satuan;
     @SerializedName("harga_beli")
     private String hargaBeli;
+    @SerializedName("status")
+    private String status;
     @SerializedName("keterangan")
     private String keterangan;
 
@@ -74,4 +79,52 @@ public class Inventory {
         this.keterangan = keterangan;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public static final Creator<Inventory> CREATOR = new Creator<Inventory>() {
+        @Override
+        public Inventory createFromParcel(Parcel in) {
+            return new Inventory(in);
+        }
+
+        @Override
+        public Inventory[] newArray(int size) {
+            return new Inventory[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    protected Inventory(Parcel in) {
+        idInventory = in.readString();
+        noInv = in.readString();
+        namaInv = in.readString();
+        jumlah = in.readString();
+        satuan = in.readString();
+        hargaBeli = in.readString();
+        status = in.readString();
+        keterangan = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+        parcel.writeString(idInventory);
+        parcel.writeString(noInv);
+        parcel.writeString(namaInv);
+        parcel.writeString(jumlah);
+        parcel.writeString(satuan);
+        parcel.writeString(hargaBeli);
+        parcel.writeString(status);
+        parcel.writeString(keterangan);
+    }
 }

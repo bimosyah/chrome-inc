@@ -1,4 +1,4 @@
-package bimo.syahputro.chromeinc.activity.detailTransaksi;
+package bimo.syahputro.chromeinc.activity.transaksi.detailTransaksi;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -1,4 +1,4 @@
-package bimo.syahputro.chromeinc.activity.reqBarang;
+package bimo.syahputro.chromeinc.activity.request.reqBarang;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,16 +14,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 import bimo.syahputro.chromeinc.R;
-import bimo.syahputro.chromeinc.activity.daftarReqBarang.DaftarReqBarangActivity;
+import bimo.syahputro.chromeinc.activity.request.daftarReqBarang.DaftarReqBarangActivity;
 import bimo.syahputro.chromeinc.network.ApiClient;
 import bimo.syahputro.chromeinc.network.ApiService;
+import bimo.syahputro.chromeinc.network.entity.Inventory;
 import bimo.syahputro.chromeinc.network.response.InventoryBaruResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ReqBarangActivity extends AppCompatActivity {
-
+    public static String PASS_DATA = "pass_data";
     Button btnReqBarang;
     EditText etNamaBarang, etJumlah, etSatuan, etHargaBeli, etKeterangan;
     ApiService apiService;
@@ -39,6 +40,16 @@ public class ReqBarangActivity extends AppCompatActivity {
         }
 
         init();
+
+        Inventory inventory = getIntent().getParcelableExtra(PASS_DATA);
+        if (inventory != null){
+            btnReqBarang.setVisibility(View.GONE);
+            etNamaBarang.setText(inventory.getNamaInv());
+            etJumlah.setText(inventory.getJumlah());
+            etSatuan.setText(inventory.getSatuan());
+            etHargaBeli.setText(inventory.getHargaBeli());
+            etKeterangan.setText(inventory.getKeterangan());
+        }
 
         btnReqBarang.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,12 +1,12 @@
-package bimo.syahputro.chromeinc.activity.daftarReqBarang;
+package bimo.syahputro.chromeinc.activity.transaksi.tambahTransaksi.lama;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -14,73 +14,73 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import bimo.syahputro.chromeinc.R;
-import bimo.syahputro.chromeinc.activity.reqBarang.ReqBarangActivity;
 import bimo.syahputro.chromeinc.network.ApiClient;
 import bimo.syahputro.chromeinc.network.ApiService;
-import bimo.syahputro.chromeinc.network.entity.Inventory;
-import bimo.syahputro.chromeinc.network.response.InventoryResponse;
+import bimo.syahputro.chromeinc.network.entity.Customer;
+import bimo.syahputro.chromeinc.network.response.CustomerResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static androidx.recyclerview.widget.DividerItemDecoration.HORIZONTAL;
 
-public class DaftarReqBarangActivity extends AppCompatActivity {
-    FloatingActionButton fabReqBarang;
+public class DaftarCustomerActivity extends AppCompatActivity {
+    RecyclerView rvCustomer;
     ApiService apiService;
+    List<Customer> customerList = new ArrayList<>();
+    DaftarCustomerAdapter daftarCustomerAdapter;
     ProgressBar progressBar;
-    DaftarReqBarangAdapter adapter;
-    List<Inventory> inventoryList = new ArrayList<>();
-    RecyclerView rvInventory;
+    TextView tvCustomerKosong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_daftar_req_barang);
+        setContentView(R.layout.activity_daftar_customer);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("Daftar Request Barang");
+            getSupportActionBar().setTitle("Daftar Customer");
         }
 
         init();
-        loadInventory();
-        fabReqBarang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(DaftarReqBarangActivity.this, ReqBarangActivity.class));
-            }
-        });
-
+        loadCustomer();
     }
 
     private void init() {
         progressBar = findViewById(R.id.progressbar);
         apiService = ApiClient.getClient().create(ApiService.class);
-        fabReqBarang = findViewById(R.id.fab_req_barang);
-        rvInventory = findViewById(R.id.rv_inventory);
+        rvCustomer = findViewById(R.id.rv_customer);
+        tvCustomerKosong = findViewById(R.id.tv_customer_kosong);
     }
 
-    private void loadInventory() {
+    private void loadCustomer() {
         progressBar.setVisibility(View.VISIBLE);
-        apiService.daftarInventory().enqueue(new Callback<InventoryResponse>() {
+        apiService.daftarCustomer().enqueue(new Callback<CustomerResponse>() {
             @Override
-            public void onResponse(Call<InventoryResponse> call, Response<InventoryResponse> response) {
+            public void onResponse(Call<CustomerResponse> call, final Response<CustomerResponse> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         if (response.body().getStatus() == 1) {
-                            inventoryList = response.body().getInventory();
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     progressBar.setVisibility(View.GONE);
+                                    customerList = response.body().getDataCustomer();
                                     setupRecyclerView();
+                                }
+                            }, 3000);
+                        }else {
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressBar.setVisibility(View.GONE);
+                                    tvCustomerKosong.setVisibility(View.VISIBLE);
                                 }
                             }, 3000);
                         }
@@ -89,39 +89,44 @@ public class DaftarReqBarangActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<InventoryResponse> call, Throwable t) {
-
+            public void onFailure(Call<CustomerResponse> call, final Throwable t) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setVisibility(View.GONE);
+                        Snackbar.make(rvCustomer, t.getMessage(), Snackbar.LENGTH_SHORT)
+                                .show();
+                    }
+                }, 3000);
             }
         });
     }
 
     private void setupRecyclerView() {
-        if (adapter == null) {
-            adapter = new DaftarReqBarangAdapter(DaftarReqBarangActivity.this, inventoryList);
+        if (daftarCustomerAdapter == null) {
+            daftarCustomerAdapter = new DaftarCustomerAdapter(DaftarCustomerActivity.this, customerList);
             DividerItemDecoration itemDecor = new DividerItemDecoration(this, HORIZONTAL);
-            rvInventory.addItemDecoration(itemDecor);
-            rvInventory.setLayoutManager(new LinearLayoutManager(this));
-            rvInventory.setAdapter(adapter);
+            rvCustomer.addItemDecoration(itemDecor);
+            rvCustomer.setLayoutManager(new LinearLayoutManager(this));
+            rvCustomer.setAdapter(daftarCustomerAdapter);
         } else {
-            adapter.notifyDataSetChanged();
+            daftarCustomerAdapter.notifyDataSetChanged();
         }
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        } else if (item.getItemId() == R.id.menu_refresh) {
-            adapter = null;
-            loadInventory();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu_customer, menu);
 
         MenuItem searchItem = menu.findItem(R.id.menu_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
@@ -134,11 +139,11 @@ public class DaftarReqBarangActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String s) {
-                adapter.getFilter().filter(s);
+                daftarCustomerAdapter.getFilter().filter(s);
                 return false;
             }
-
         });
+
         return true;
     }
 }

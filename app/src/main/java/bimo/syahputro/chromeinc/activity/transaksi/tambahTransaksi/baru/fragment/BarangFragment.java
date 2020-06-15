@@ -1,4 +1,4 @@
-package bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.fragment;
+package bimo.syahputro.chromeinc.activity.transaksi.tambahTransaksi.baru.fragment;
 
 import android.content.Context;
 import android.os.Bundle;

@@ -1,6 +1,8 @@
-package bimo.syahputro.chromeinc.activity.daftarReqBarang;
+package bimo.syahputro.chromeinc.activity.request.daftarReqBarang;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +11,17 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import bimo.syahputro.chromeinc.R;
+import bimo.syahputro.chromeinc.activity.request.reqBarang.ReqBarangActivity;
 import bimo.syahputro.chromeinc.network.entity.Inventory;
+
+import static bimo.syahputro.chromeinc.activity.request.reqBarang.ReqBarangActivity.PASS_DATA;
 
 class DaftarReqBarangAdapter extends RecyclerView.Adapter<DaftarReqBarangAdapter.ViewHolder> implements Filterable {
     List<Inventory> inventoryList;
@@ -67,8 +73,22 @@ class DaftarReqBarangAdapter extends RecyclerView.Adapter<DaftarReqBarangAdapter
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.tvNamaInventory.setText(inventoryList.get(position).getNamaInv());
+        String status = inventoryList.get(position).getStatus().equals("1") ? "Selesai" : "Menunggu";
+        holder.tvStatus.setText(status);
+
+        String color = inventoryList.get(position).getStatus().equals("1") ? context.getResources().getString(R.string.status_selesai) : context.getResources().getString(R.string.status_menunggu);
+        holder.tvStatus.setBackgroundColor(Color.parseColor(color));
+
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ReqBarangActivity.class);
+                intent.putExtra(PASS_DATA, inventoryList.get(position));
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -82,11 +102,14 @@ class DaftarReqBarangAdapter extends RecyclerView.Adapter<DaftarReqBarangAdapter
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvNamaInventory;
+        TextView tvNamaInventory, tvStatus;
+        ConstraintLayout container;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            container = itemView.findViewById(R.id.constrain_layout);
             tvNamaInventory = itemView.findViewById(R.id.tv_nama_barang);
+            tvStatus = itemView.findViewById(R.id.tv_status);
         }
     }
 }

@@ -1,4 +1,4 @@
-package bimo.syahputro.chromeinc.activity.daftarTransaksi;
+package bimo.syahputro.chromeinc.activity.transaksi.daftarTransaksi;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bimo.syahputro.chromeinc.R;
-import bimo.syahputro.chromeinc.activity.tambahTransaksi.lama.DaftarCustomerActivity;
-import bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity;
+import bimo.syahputro.chromeinc.activity.transaksi.tambahTransaksi.lama.DaftarCustomerActivity;
+import bimo.syahputro.chromeinc.activity.transaksi.tambahTransaksi.baru.TransaksiCustomerBaruActivity;
 import bimo.syahputro.chromeinc.network.ApiClient;
 import bimo.syahputro.chromeinc.network.ApiService;
 import bimo.syahputro.chromeinc.network.entity.DaftarTransaksi;

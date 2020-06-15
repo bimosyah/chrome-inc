@@ -1,4 +1,4 @@
-package bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.fragment;
+package bimo.syahputro.chromeinc.activity.transaksi.tambahTransaksi.baru.fragment;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import bimo.syahputro.chromeinc.R;
-import bimo.syahputro.chromeinc.activity.detailTransaksi.DetailTransaksiAdapter;
 
 class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.ViewHolder> {
     ArrayList<String> barangList;

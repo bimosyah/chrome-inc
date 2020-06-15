@@ -16,22 +16,22 @@
         <activity android:name=".activity.NotifActivity">
         </activity>
         <activity
-            android:name=".activity.reqBarang.ReqBarangActivity"
+            android:name=".activity.request.reqBarang.ReqBarangActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.daftarReqBarang.DaftarReqBarangActivity"
+            android:name=".activity.request.daftarReqBarang.DaftarReqBarangActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.tambahTransaksi.lama.DaftarCustomerActivity"
+            android:name=".activity.transaksi.tambahTransaksi.lama.DaftarCustomerActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity"
+            android:name=".activity.transaksi.tambahTransaksi.baru.TransaksiCustomerBaruActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.detailTransaksi.DetailTransaksiActivity"
+            android:name=".activity.transaksi.detailTransaksi.DetailTransaksiActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.daftarTransaksi.DaftarTransaksiActivity"
+            android:name=".activity.transaksi.daftarTransaksi.DaftarTransaksiActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.dashboard.DashboardActivity"

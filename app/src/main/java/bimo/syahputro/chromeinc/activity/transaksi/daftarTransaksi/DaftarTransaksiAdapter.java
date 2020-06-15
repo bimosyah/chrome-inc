@@ -1,4 +1,4 @@
-package bimo.syahputro.chromeinc.activity.daftarTransaksi;
+package bimo.syahputro.chromeinc.activity.transaksi.daftarTransaksi;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,11 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bimo.syahputro.chromeinc.R;
-import bimo.syahputro.chromeinc.activity.detailTransaksi.DetailTransaksiActivity;
+import bimo.syahputro.chromeinc.activity.transaksi.detailTransaksi.DetailTransaksiActivity;
 import bimo.syahputro.chromeinc.network.entity.DaftarTransaksi;
 
-import static bimo.syahputro.chromeinc.activity.detailTransaksi.DetailTransaksiActivity.ID_STATUS;
-import static bimo.syahputro.chromeinc.activity.detailTransaksi.DetailTransaksiActivity.ID_TRANSAKSI;
+import static bimo.syahputro.chromeinc.activity.transaksi.detailTransaksi.DetailTransaksiActivity.ID_STATUS;
+import static bimo.syahputro.chromeinc.activity.transaksi.detailTransaksi.DetailTransaksiActivity.ID_TRANSAKSI;
 
 class DaftarTransaksiAdapter extends RecyclerView.Adapter<DaftarTransaksiAdapter.ViewHolder> implements Filterable {
     Context context;

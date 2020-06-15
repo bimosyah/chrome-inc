@@ -1,4 +1,4 @@
-package bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.fragment;
+package bimo.syahputro.chromeinc.activity.transaksi.tambahTransaksi.baru.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,9 +13,9 @@ import androidx.fragment.app.Fragment;
 
 import bimo.syahputro.chromeinc.R;
 
-import static bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity.ALAMAT_CUSTOMER;
-import static bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity.NAMA_CUSTOMER;
-import static bimo.syahputro.chromeinc.activity.tambahTransaksi.baru.TransaksiCustomerBaruActivity.NOTELP_CUSTOMER;
+import static bimo.syahputro.chromeinc.activity.transaksi.tambahTransaksi.baru.TransaksiCustomerBaruActivity.ALAMAT_CUSTOMER;
+import static bimo.syahputro.chromeinc.activity.transaksi.tambahTransaksi.baru.TransaksiCustomerBaruActivity.NAMA_CUSTOMER;
+import static bimo.syahputro.chromeinc.activity.transaksi.tambahTransaksi.baru.TransaksiCustomerBaruActivity.NOTELP_CUSTOMER;
 
 public class CustomerFragment extends Fragment {
     OnDataPassCustomer dataParser;
