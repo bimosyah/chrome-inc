@@ -1,11 +1,18 @@
 package bimo.syahputro.chromeinc.activity.transaksi.tambahTransaksi.baru;
 
+import android.Manifest;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -22,7 +30,12 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import bimo.syahputro.chromeinc.R;
 import bimo.syahputro.chromeinc.activity.dashboard.DashboardActivity;
@@ -39,6 +52,7 @@ import retrofit2.Response;
 
 public class TransaksiCustomerBaruActivity extends AppCompatActivity implements CustomerFragment.OnDataPassCustomer,
         BarangFragment.OnDataPassBarang, CheckoutFragment.OnDataPassCheckout {
+
     public static String ID_CUSTOMER = "ID_CUSTOMER";
     public static String NAMA_CUSTOMER = "NAMA_CUSTOMER";
     public static String ALAMAT_CUSTOMER = "ALAMAT_CUSTOMER";
@@ -72,6 +86,9 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle("Transaksi Baru");
         }
+
+        ActivityCompat.requestPermissions(this, new String[]{
+                Manifest.permission.WRITE_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
 
         init();
         cekCustomerLama();
@@ -255,6 +272,7 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
                         if (response.body().getStatus() == 1) {
                             Snackbar.make(btnNext, "Berhasil", Snackbar.LENGTH_SHORT)
                                     .show();
+                            nota(response.body().getId_transaksi());
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -279,5 +297,67 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
                         .show();
             }
         });
+    }
+
+    private void nota(int id_transaksi){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Date date = new Date();
+
+        PdfDocument document = new PdfDocument();
+        Paint paint = new Paint();
+
+        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(595, 842,1).create();
+        PdfDocument.Page page = document.startPage(pageInfo);
+
+        Canvas canvas = page.getCanvas();
+        canvas.drawText("Chrome.Inc",20,30, paint);
+        canvas.drawText("Karanglo Indah Blok U-1 Kota Malang",20,50, paint);
+        canvas.drawText("Telp. 081252411618",20,70, paint);
+
+        canvas.drawText("Id Transaksi",20,105, paint);
+        canvas.drawText("Tanggal",20,125, paint);
+        canvas.drawText("Nama Customer",20,145, paint);
+        canvas.drawText(": " + id_transaksi,150,105, paint);
+        canvas.drawText(": " + formatter.format(date),150,125, paint);
+        canvas.drawText(": " + namaCustomer,150,145, paint);
+
+        canvas.drawText("--------------------------------------------------------------------------------------------------",20,180, paint);
+        canvas.drawText("Nama Barang",20,205, paint);
+        canvas.drawText("Qty",150,205, paint);
+        canvas.drawText("Harga",200,205, paint);
+        canvas.drawText("Total",270,205, paint);
+        canvas.drawText("--------------------------------------------------------------------------------------------------",20,230, paint);
+
+        int posisi_y = 250;
+        int harga_total = 0;
+        for (int i = 0; i < barangList.size(); i++){
+            int total = Integer.parseInt(jumlahBarangList.get(i)) * Integer.parseInt(hargaBarangList.get(i));
+            canvas.drawText(barangList.get(i),20,posisi_y, paint);
+            canvas.drawText(jumlahBarangList.get(i),150,posisi_y, paint);
+            canvas.drawText(hargaBarangList.get(i),200,posisi_y, paint);
+            canvas.drawText(String.valueOf(total),270,posisi_y, paint);
+            posisi_y += 20;
+            harga_total += total;
+        }
+
+        canvas.drawText("--------------------------------------------------------------------------------------------------",20,posisi_y, paint);
+        canvas.drawText("Total",20,posisi_y + 20, paint);
+        canvas.drawText(String.valueOf(harga_total),270,posisi_y + 20, paint);
+
+        document.finishPage(page);
+
+        String filename = formatter.format(date);
+        File file = new File(Environment.getExternalStorageDirectory(),"/"+filename+".pdf");
+
+        try {
+            document.writeTo(new FileOutputStream(file));
+            Log.d("Nota", "nota: Berhasil");
+        } catch (IOException e){
+            e.printStackTrace();
+            Log.d("Nota", "nota: gagal ");
+        }
+
+        document.close();
+
     }
 }
