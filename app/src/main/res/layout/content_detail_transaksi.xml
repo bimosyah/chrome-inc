@@ -179,11 +179,21 @@
             android:id="@+id/tv_estimasi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4"
             tools:text="2 Hari" />
+
+        <Button
+            android:id="@+id/btn_transaksi_selesai"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Selesai"
+            android:backgroundTint="@color/blue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_estimasi" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -1,10 +1,16 @@
 package bimo.syahputro.chromeinc.activity.transaksi.detailTransaksi;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -18,7 +24,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import bimo.syahputro.chromeinc.R;
@@ -28,13 +39,14 @@ import bimo.syahputro.chromeinc.network.entity.DetailTransaksi;
 import bimo.syahputro.chromeinc.network.entity.DetailTransaksiCustomer;
 import bimo.syahputro.chromeinc.network.response.TransaksiDetailResponse;
 import bimo.syahputro.chromeinc.network.response.TransaksiUpdateStatusResponse;
+import bimo.syahputro.chromeinc.utils.TransaksiDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static androidx.recyclerview.widget.DividerItemDecoration.HORIZONTAL;
 
-public class DetailTransaksiActivity extends AppCompatActivity {
+public class DetailTransaksiActivity extends AppCompatActivity implements TransaksiDialog.TransaksiDialogListener {
     public static String ID_TRANSAKSI = "ID_TRANSAKSI";
     public static String ID_STATUS = "ID_STATUS";
 
@@ -45,10 +57,13 @@ public class DetailTransaksiActivity extends AppCompatActivity {
     DetailTransaksiAdapter adapter;
     RecyclerView rvDetailTransaksi;
     ImageView ivGambarBarang;
+    Button btnTransaksiSelesai;
     Spinner spinnerStatus;
     String id_status_transaksi = null;
+    String namaCustomer = "";
+    int jumlah_bayar = 0;
     private ApiService apiService;
-
+    String id_transaksi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +75,7 @@ public class DetailTransaksiActivity extends AppCompatActivity {
         init();
 
         Bundle bundle = getIntent().getExtras();
-        final String id_transaksi = bundle.getString(ID_TRANSAKSI);
+        id_transaksi = bundle.getString(ID_TRANSAKSI);
         id_status_transaksi = bundle.getString(ID_STATUS);
 
         detailTransaksi(id_transaksi);
@@ -77,6 +92,18 @@ public class DetailTransaksiActivity extends AppCompatActivity {
             }
         });
 
+        btnTransaksiSelesai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDialog();
+            }
+        });
+
+    }
+
+    private void openDialog() {
+        TransaksiDialog dialog = new TransaksiDialog();
+        dialog.show(getSupportFragmentManager(), "Bayar");
     }
 
     private void detailTransaksi(String id_transaksi) {
@@ -90,6 +117,7 @@ public class DetailTransaksiActivity extends AppCompatActivity {
                             detailTransaksiCustomerList = response.body().getDetailTransaksiCustomer();
                             detailTransaksiList = response.body().getDetailTransaksi();
                             for (DetailTransaksiCustomer customer : detailTransaksiCustomerList) {
+                                namaCustomer = customer.getNamaCustomer();
                                 tvNamaCustomer.setText(customer.getNamaCustomer());
                                 tvAlamatCustomer.setText(customer.getAlamat());
                                 tvNomerCustomer.setText(customer.getNoTelp());
@@ -124,7 +152,7 @@ public class DetailTransaksiActivity extends AppCompatActivity {
                         if (response.body().getStatus() == 1) {
                             Snackbar.make(constraintLayout, "Update status berhasil", Snackbar.LENGTH_SHORT)
                                     .show();
-                        }else {
+                        } else {
                             Snackbar.make(constraintLayout, "Update status gagal", Snackbar.LENGTH_SHORT)
                                     .show();
                         }
@@ -151,6 +179,7 @@ public class DetailTransaksiActivity extends AppCompatActivity {
         tvNomerCustomer = findViewById(R.id.tv_nomer_customer);
         ivGambarBarang = findViewById(R.id.iv_gambar_barang);
         tvTotalTransaksi = findViewById(R.id.tv_total_transaksi);
+        btnTransaksiSelesai = findViewById(R.id.btn_transaksi_selesai);
     }
 
     private void setupRecyclerView() {
@@ -177,5 +206,84 @@ public class DetailTransaksiActivity extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
+    }
+
+    private void nota(String id_transaksi, String bayar) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Date date = new Date();
+
+        PdfDocument document = new PdfDocument();
+        Paint paint = new Paint();
+
+        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(595, 842, 1).create();
+        PdfDocument.Page page = document.startPage(pageInfo);
+
+        Canvas canvas = page.getCanvas();
+        canvas.drawText("Chrome.Inc", 20, 30, paint);
+        canvas.drawText("Karanglo Indah Blok U-1 Kota Malang", 20, 50, paint);
+        canvas.drawText("Telp. 081252411618", 20, 70, paint);
+
+        canvas.drawText("Id Transaksi", 20, 105, paint);
+        canvas.drawText("Tanggal", 20, 125, paint);
+        canvas.drawText("Nama Customer", 20, 145, paint);
+        canvas.drawText(": " + id_transaksi, 150, 105, paint);
+        canvas.drawText(": " + formatter.format(date), 150, 125, paint);
+        canvas.drawText(": " + namaCustomer, 150, 145, paint);
+
+        canvas.drawText("--------------------------------------------------------------------------------------------------", 20, 180, paint);
+        canvas.drawText("Nama Barang", 20, 205, paint);
+        canvas.drawText("Qty", 150, 205, paint);
+        canvas.drawText("Harga", 200, 205, paint);
+        canvas.drawText("Total", 270, 205, paint);
+        canvas.drawText("--------------------------------------------------------------------------------------------------", 20, 230, paint);
+
+        int posisi_y = 250;
+        int harga_total = 0;
+
+        for (int i = 0; i < detailTransaksiList.size(); i++) {
+            int total = Integer.parseInt(detailTransaksiList.get(i).getJumlahBarang()) * Integer.parseInt(detailTransaksiList.get(i).getHargaSatuan());
+            canvas.drawText(detailTransaksiList.get(i).getNamaBarang(), 20, posisi_y, paint);
+            canvas.drawText(detailTransaksiList.get(i).getJumlahBarang(), 150, posisi_y, paint);
+            canvas.drawText(detailTransaksiList.get(i).getHargaSatuan(), 200, posisi_y, paint);
+            canvas.drawText(String.valueOf(total), 270, posisi_y, paint);
+            posisi_y += 20;
+            harga_total += total;
+        }
+
+        int kembalian = Integer.parseInt(bayar) - harga_total;
+
+
+        canvas.drawText("--------------------------------------------------------------------------------------------------", 20, posisi_y, paint);
+        canvas.drawText("Total", 20, posisi_y + 20, paint);
+        canvas.drawText(String.valueOf(harga_total), 270, posisi_y + 20, paint);
+        canvas.drawText("Tunai", 20, posisi_y + 40, paint);
+        canvas.drawText(bayar, 270, posisi_y + 40, paint);
+        canvas.drawText("Kembali", 20, posisi_y + 60, paint);
+        canvas.drawText(String.valueOf(kembalian), 270, posisi_y + 60, paint);
+
+        canvas.drawText("Terimakasih Atas Kepercayaan Anda", 20, posisi_y + 90, paint);
+        canvas.drawText("Periksa Barang Sebelum Kembali", 20, posisi_y + 110, paint);
+        canvas.drawText("Komplain Tidak Diterima Ketika Sudah Meninggalkan Pabrik", 20, posisi_y + 130, paint);
+
+        document.finishPage(page);
+
+        String filename = "selesai " + id_transaksi;
+        File file = new File(Environment.getExternalStorageDirectory(), "/" + filename + ".pdf");
+
+        try {
+            document.writeTo(new FileOutputStream(file));
+            Log.d("Nota", "nota: Berhasil");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.d("Nota", "nota: gagal ");
+        }
+
+        document.close();
+    }
+
+    @Override
+    public void applyTexts(String jumlah_bayar) {
+        nota(id_transaksi,jumlah_bayar);
+        updateStatus(id_transaksi, String.valueOf(2));
     }
 }
