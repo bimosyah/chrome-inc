@@ -11,6 +11,7 @@ import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.text.format.DateUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
@@ -35,6 +36,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import bimo.syahputro.chromeinc.R;
@@ -299,9 +301,20 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
         });
     }
 
+    public static Date addDays(Date date, int days)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
+    }
+
     private void nota(int id_transaksi){
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        SimpleDateFormat formatter_selesai = new SimpleDateFormat("dd-MM-yyyy");
         Date date = new Date();
+        Date date_selesai = new Date();
+        date_selesai = addDays(date_selesai,4);
 
         PdfDocument document = new PdfDocument();
         Paint paint = new Paint();
@@ -343,6 +356,9 @@ public class TransaksiCustomerBaruActivity extends AppCompatActivity implements 
         canvas.drawText("--------------------------------------------------------------------------------------------------",20,posisi_y, paint);
         canvas.drawText("Total",20,posisi_y + 20, paint);
         canvas.drawText(String.valueOf(harga_total),270,posisi_y + 20, paint);
+        canvas.drawText("Estimasi Barang Selesai",20,posisi_y + 40, paint);
+        canvas.drawText(formatter_selesai.format(date_selesai),170,posisi_y + 40, paint);
+
 
         document.finishPage(page);
 
