@@ -63,6 +63,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_hargabeli_barang" />
 
+    <EditText
+        android:id="@+id/et_nama_tukang"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/action_detail"
+        android:hint="Nama Tukang"
+        android:paddingStart="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_keterangan_barang" />
     <Button
         android:id="@+id/btn_req_barang"
         android:layout_width="match_parent"
@@ -74,6 +84,6 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_keterangan_barang" />
+        app:layout_constraintTop_toBottomOf="@+id/et_nama_tukang" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

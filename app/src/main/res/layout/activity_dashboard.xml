@@ -38,7 +38,7 @@
         android:id="@+id/tv_role"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Admin"
+        android:text="Tukang"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/iv_person"
         app:layout_constraintTop_toBottomOf="@+id/tv_username" />

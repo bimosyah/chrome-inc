@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="bimo.syahputro.chromeinc">
+    package="ninda.sabilla.chromeinc">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".utils.Notification"
+        android:name="ninda.sabilla.chromeinc.utils.Notification"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,29 +15,29 @@
         android:supportsRtl="true"
         android:theme="@style/MyTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.NotifActivity"></activity>
+        <activity android:name="ninda.sabilla.chromeinc.activity.NotifActivity"></activity>
         <activity
-            android:name=".activity.request.reqBarang.ReqBarangActivity"
+            android:name="ninda.sabilla.chromeinc.activity.request.reqBarang.ReqBarangActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.request.daftarReqBarang.DaftarReqBarangActivity"
+            android:name="ninda.sabilla.chromeinc.activity.request.daftarReqBarang.DaftarReqBarangActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.transaksi.tambahTransaksi.lama.DaftarCustomerActivity"
+            android:name="ninda.sabilla.chromeinc.activity.transaksi.tambahTransaksi.lama.DaftarCustomerActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.transaksi.tambahTransaksi.baru.TransaksiCustomerBaruActivity"
+            android:name="ninda.sabilla.chromeinc.activity.transaksi.tambahTransaksi.baru.TransaksiCustomerBaruActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.transaksi.detailTransaksi.DetailTransaksiActivity"
+            android:name="ninda.sabilla.chromeinc.activity.transaksi.detailTransaksi.DetailTransaksiActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.transaksi.daftarTransaksi.DaftarTransaksiActivity"
+            android:name="ninda.sabilla.chromeinc.activity.transaksi.daftarTransaksi.DaftarTransaksiActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.dashboard.DashboardActivity"
+            android:name="ninda.sabilla.chromeinc.activity.dashboard.DashboardActivity"
             android:theme="@style/MyTheme2" />
-        <activity android:name=".activity.login.LoginActivity">
+        <activity android:name="ninda.sabilla.chromeinc.activity.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
