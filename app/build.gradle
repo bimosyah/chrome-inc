@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.2"
 
     defaultConfig {
-        applicationId "ninda.sabilla.chromeinc"
+        applicationId "ninda.niar.chromeinc"
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
