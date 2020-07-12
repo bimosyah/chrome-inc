@@ -19,15 +19,17 @@ import ninda.niar.chromeinc.network.ApiClient;
 import ninda.niar.chromeinc.network.ApiService;
 import ninda.niar.chromeinc.network.entity.Inventory;
 import ninda.niar.chromeinc.network.response.InventoryBaruResponse;
+import ninda.niar.chromeinc.utils.Preference;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ReqBarangActivity extends AppCompatActivity {
     public static String PASS_DATA = "pass_data";
-    Button btnReqBarang;
-    EditText etNamaBarang, etJumlah, etSatuan, etHargaBeli, etKeterangan,etNamaTukang;
+    Button btnReqBarang,btnStok, btnReqStok;
+    EditText etNamaBarang, etJumlah, etSatuan, etHargaBeli, etKeterangan,etNamaTukang, etStok, etStokDipakai;
     ApiService apiService;
+    String id_inventory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,8 @@ public class ReqBarangActivity extends AppCompatActivity {
 
         init();
 
+        etNamaTukang.setText(Preference.getUsername(getBaseContext()));
+
         Inventory inventory = getIntent().getParcelableExtra(PASS_DATA);
         if (inventory != null){
             btnReqBarang.setVisibility(View.GONE);
@@ -49,7 +53,15 @@ public class ReqBarangActivity extends AppCompatActivity {
             etSatuan.setText(inventory.getSatuan());
             etHargaBeli.setText(inventory.getHargaBeli());
             etKeterangan.setText(inventory.getKeterangan());
+            etStok.setText(inventory.getStok());
             etNamaTukang.setText(inventory.getNamaTukang());
+            id_inventory = inventory.getIdInventory();
+
+            if (inventory.getStok().equals("0")){
+                btnStok.setVisibility(View.GONE);
+                btnReqStok.setVisibility(View.VISIBLE);
+                etStokDipakai.setEnabled(false);
+            }
         }
 
         btnReqBarang.setOnClickListener(new View.OnClickListener() {
@@ -65,11 +77,33 @@ public class ReqBarangActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnStok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!etStok.getText().equals("")){
+                    updateStok();
+                }
+            }
+        });
+
+        btnReqStok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reqStok();
+            }
+        });
     }
 
     private void reqBarang() {
-        apiService.inventoryBaru(etNamaBarang.getText().toString(), etJumlah.getText().toString(), etSatuan.getText().toString(),
-                etHargaBeli.getText().toString(), etKeterangan.getText().toString(), etNamaTukang.getText().toString()).enqueue(new Callback<InventoryBaruResponse>() {
+        apiService.inventoryBaru(
+                Preference.getUsername(getBaseContext()),
+                etNamaBarang.getText().toString(),
+                etJumlah.getText().toString(),
+                etSatuan.getText().toString(),
+                etHargaBeli.getText().toString(),
+                etKeterangan.getText().toString()
+        ).enqueue(new Callback<InventoryBaruResponse>() {
             @Override
             public void onResponse(Call<InventoryBaruResponse> call, Response<InventoryBaruResponse> response) {
                 if (response.isSuccessful()) {
@@ -99,16 +133,70 @@ public class ReqBarangActivity extends AppCompatActivity {
             }
         });
     }
+    private void updateStok(){
+        apiService.updateStokBarang(id_inventory, etStokDipakai.getText().toString()).enqueue(new Callback<InventoryBaruResponse>() {
+            @Override
+            public void onResponse(Call<InventoryBaruResponse> call, Response<InventoryBaruResponse> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        if (response.body().getStatus() == 1) {
+                            Snackbar.make(btnStok, "Update Stok Berhasil", Snackbar.LENGTH_SHORT)
+                                    .show();
+                        } else {
+                            Snackbar.make(btnStok, "Update Stok Gagal", Snackbar.LENGTH_SHORT)
+                                    .show();
+                        }
+                    }
+                }
+            }
 
+            @Override
+            public void onFailure(Call<InventoryBaruResponse> call, Throwable t) {
+                Snackbar.make(btnStok, t.getMessage(), Snackbar.LENGTH_SHORT)
+                        .show();
+
+            }
+        });
+    }
+    private void reqStok(){
+        apiService.reqStokBarang().enqueue(new Callback<InventoryBaruResponse>() {
+            @Override
+            public void onResponse(Call<InventoryBaruResponse> call, Response<InventoryBaruResponse> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        if (response.body().getStatus() == 1) {
+                            Snackbar.make(btnReqBarang, "Request Berhasil", Snackbar.LENGTH_SHORT)
+                                    .show();
+                        } else {
+                            Snackbar.make(btnReqBarang, "Request Gagal", Snackbar.LENGTH_SHORT)
+                                    .show();
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<InventoryBaruResponse> call, Throwable t) {
+                Snackbar.make(btnReqBarang, t.getMessage(), Snackbar.LENGTH_SHORT)
+                        .show();
+
+            }
+        });
+    }
     private void init() {
         apiService = ApiClient.getClient().create(ApiService.class);
         btnReqBarang = findViewById(R.id.btn_req_barang);
+        btnStok = findViewById(R.id.btn_stok);
+        btnReqStok = findViewById(R.id.btn_req_stok);
         etNamaBarang = findViewById(R.id.et_nama_barang);
         etJumlah = findViewById(R.id.et_jumlah_barang);
         etSatuan = findViewById(R.id.et_satuan_barang);
         etHargaBeli = findViewById(R.id.et_hargabeli_barang);
         etKeterangan = findViewById(R.id.et_keterangan_barang);
         etNamaTukang = findViewById(R.id.et_nama_tukang);
+        etStok = findViewById(R.id.et_stok);
+        etStokDipakai = findViewById(R.id.et_stok_dipakai);
     }
 
     @Override

@@ -81,4 +81,14 @@ public interface ApiService {
     @GET("inventory/daftartInventory")
     Call<InventoryResponse> daftarInventory();
 
+    @FormUrlEncoded
+    @POST("inventory/updateStokInventory")
+    Call<InventoryBaruResponse> updateStokBarang(
+            @Field("id_inventory") String id_inventory,
+            @Field("stok_digunakan") String stok_digunakan
+    );
+
+    @GET("inventory/reqStokInventory")
+    Call<InventoryBaruResponse> reqStokBarang();
+
 }

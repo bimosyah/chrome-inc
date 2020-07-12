@@ -9,6 +9,7 @@
     <include layout="@layout/content_daftar_req_barang"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:visibility="gone"
         android:id="@+id/fab_req_barang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

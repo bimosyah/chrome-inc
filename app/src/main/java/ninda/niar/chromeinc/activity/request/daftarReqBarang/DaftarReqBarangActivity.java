@@ -46,7 +46,7 @@ public class DaftarReqBarangActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("Daftar Request Barang");
+            getSupportActionBar().setTitle("Daftar Barang Baku");
         }
 
         init();

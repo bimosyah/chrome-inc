@@ -6,6 +6,17 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 public class Inventory implements Parcelable {
+    public static final Creator<Inventory> CREATOR = new Creator<Inventory>() {
+        @Override
+        public Inventory createFromParcel(Parcel in) {
+            return new Inventory(in);
+        }
+
+        @Override
+        public Inventory[] newArray(int size) {
+            return new Inventory[size];
+        }
+    };
     @SerializedName("id_inventory")
     private String idInventory;
     @SerializedName("no_inv")
@@ -24,6 +35,8 @@ public class Inventory implements Parcelable {
     private String hargaBeli;
     @SerializedName("keterangan")
     private String keterangan;
+    @SerializedName("stok")
+    private String stok;
     @SerializedName("status")
     private String status;
 
@@ -37,20 +50,17 @@ public class Inventory implements Parcelable {
         satuan = in.readString();
         hargaBeli = in.readString();
         keterangan = in.readString();
+        stok = in.readString();
         status = in.readString();
     }
 
-    public static final Creator<Inventory> CREATOR = new Creator<Inventory>() {
-        @Override
-        public Inventory createFromParcel(Parcel in) {
-            return new Inventory(in);
-        }
+    public String getStok() {
+        return stok;
+    }
 
-        @Override
-        public Inventory[] newArray(int size) {
-            return new Inventory[size];
-        }
-    };
+    public void setStok(String stok) {
+        this.stok = stok;
+    }
 
     public String getIdInventory() {
         return idInventory;
@@ -148,6 +158,7 @@ public class Inventory implements Parcelable {
         parcel.writeString(satuan);
         parcel.writeString(hargaBeli);
         parcel.writeString(keterangan);
+        parcel.writeString(stok);
         parcel.writeString(status);
     }
 }
